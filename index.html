@@ -91,6 +91,7 @@
     overflow:hidden;
     box-shadow:0 18px 40px rgba(60,30,10,0.25);
     border:6px solid var(--cream);
+    touch-action:none;
   }
   .scene{
     position:absolute;top:0;left:0;right:0;bottom:0;
@@ -205,6 +206,62 @@
     font-weight:600;min-height:20px;margin-top:6px;
   }
 
+  /* ---------- lanterna no escuro ---------- */
+  .torch{
+    position:absolute;
+    width:120px;height:120px;
+    border-radius:50%;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 9999px rgba(8,5,3,0.95);
+    pointer-events:none;
+    z-index:30;
+    transition:width .7s ease, height .7s ease, box-shadow .7s ease;
+  }
+  .torch-hint{
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    z-index:35;
+    color:#FFE9C2;
+    font-size:13.5px;font-weight:600;text-align:center;
+    background:rgba(0,0,0,0.35);
+    padding:10px 16px;border-radius:14px;
+    pointer-events:none;
+    transition:opacity .5s ease;
+    width:78%;
+    line-height:1.4;
+  }
+  .torch-hint.hidden{opacity:0;}
+
+  .torch-toggle{
+    display:block;margin:0 auto 14px;
+    background:var(--gold);
+    color:#3A2509 !important;
+    -webkit-text-fill-color:#3A2509;
+    -webkit-appearance:none;appearance:none;
+    border:none;border-radius:20px;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;font-size:13.5px;
+    padding:8px 18px;cursor:pointer;
+  }
+
+  /* ---------- desafio do cronômetro ---------- */
+  .stopwatch{
+    font-family:'Baloo 2', sans-serif;
+    font-size:40px;color:#C0512F;
+    margin:14px 0 16px;
+    font-weight:700;
+  }
+  .torch-result{
+    min-height:24px;
+    font-size:14.5px;font-weight:600;
+    color:var(--gold-dark);
+    margin-top:10px;line-height:1.5;
+  }
+  .torch-attempts{
+    font-size:12.5px;color:var(--gold-dark);opacity:.8;margin-top:-4px;margin-bottom:4px;
+  }
+
   /* ---------- overlay / modal ---------- */
   .overlay{
     position:fixed;top:0;left:0;right:0;bottom:0;
@@ -313,18 +370,34 @@
         <button class="chest-btn" id="chestBtn">
           <span>🎁</span><span class="lock">🔒</span>
         </button>
+
+        <div class="torch-hint" id="torchHint">👆 desliza o dedo pra iluminar o caminho</div>
+        <div class="torch" id="torch"></div>
       </div>
     </div>
     <div class="chest-hint" id="chestHint"></div>
+    <button class="torch-toggle" id="reopenTorch">🔋 Aumentar a luz</button>
   </div>
 
   <!-- overlays -->
   <div class="overlay" id="overlayIntro">
     <div class="card" id="card-intro">
-      <span class="icon-big">🗺️</span>
-      <h2>Bem-vinda à caça!</h2>
-      <p>Pelo mapa estão escondidas <b>6 pistas</b>. Toque em cada uma pra ler um pedacinho do nosso primeiro mês. Quando encontrar todas, uma chave vai liberar o tesouro no final. ✨</p>
+      <span class="icon-big">🔦</span>
+      <h2>Apaguei as luzes de propósito 😏</h2>
+      <p>Tá tudo no escuro por aqui. Usa o dedo pra iluminar o caminho e encontrar as <b>6 pistas</b> escondidas. Só que a luz tá bem fraquinha... quer aumentar?</p>
       <button class="btn" id="startBtn">Vamos lá</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlayTorch">
+    <div class="card" id="card-torch">
+      <span class="icon-big">🔋</span>
+      <h2>Aumentar a Luz</h2>
+      <p>Toca em <b>começar</b> e depois em <b>PARAR</b> bem nos <b>3.00 segundos</b> pra deixar a lanterna mais forte.</p>
+      <div class="torch-attempts" id="torchAttemptsText">Tentativa 1</div>
+      <div class="stopwatch" id="stopwatchDisplay">0.00s</div>
+      <button class="btn" id="stopwatchBtn">Começar</button>
+      <div class="torch-result" id="torchResult"></div>
     </div>
   </div>
 
@@ -397,6 +470,7 @@ clues.forEach(c=>{
 const overlayClue = document.getElementById('overlayClue');
 const overlayIntro = document.getElementById('overlayIntro');
 const overlayTreasure = document.getElementById('overlayTreasure');
+const overlayTorch = document.getElementById('overlayTorch');
 const chestBtn = document.getElementById('chestBtn');
 const chestHint = document.getElementById('chestHint');
 const progressText = document.getElementById('progressText');
@@ -422,8 +496,14 @@ function openClue(c){
 document.getElementById('closeClue').addEventListener('click', ()=> overlayClue.classList.remove('active'));
 overlayClue.addEventListener('click', (e)=>{ if(e.target===overlayClue) overlayClue.classList.remove('active'); });
 
-document.getElementById('startBtn').addEventListener('click', ()=> overlayIntro.classList.remove('active'));
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  overlayIntro.classList.remove('active');
+  overlayTorch.classList.add('active');
+});
 overlayIntro.classList.add('active');
+
+document.getElementById('reopenTorch').addEventListener('click', ()=> overlayTorch.classList.add('active'));
+overlayTorch.addEventListener('click', (e)=>{ if(e.target===overlayTorch) overlayTorch.classList.remove('active'); });
 
 chestBtn.addEventListener('click', ()=>{
   if(foundCount < total){
@@ -438,6 +518,105 @@ chestBtn.addEventListener('click', ()=>{
 
 document.getElementById('closeTreasure').addEventListener('click', ()=> overlayTreasure.classList.remove('active'));
 overlayTreasure.addEventListener('click', (e)=>{ if(e.target===overlayTreasure) overlayTreasure.classList.remove('active'); });
+
+/* ---------- lanterna: segue o dedo / mouse ---------- */
+const sceneFrame = document.querySelector('.scene-frame');
+const torchEl = document.getElementById('torch');
+const torchHint = document.getElementById('torchHint');
+let torchRadius = 60; // raio inicial bem fraquinho
+
+function setTorchSize(r){
+  torchRadius = r;
+  torchEl.style.width = (r*2) + 'px';
+  torchEl.style.height = (r*2) + 'px';
+}
+setTorchSize(torchRadius);
+
+function moveTorch(clientX, clientY){
+  const rect = sceneFrame.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
+  torchEl.style.left = x + 'px';
+  torchEl.style.top = y + 'px';
+  if(!torchHint.classList.contains('hidden')){
+    torchHint.classList.add('hidden');
+  }
+}
+
+sceneFrame.addEventListener('pointermove', (e)=>{
+  moveTorch(e.clientX, e.clientY);
+});
+sceneFrame.addEventListener('pointerdown', (e)=>{
+  moveTorch(e.clientX, e.clientY);
+});
+
+/* ---------- desafio do cronômetro (com pegadinha na 3ª tentativa) ---------- */
+const stopwatchBtn = document.getElementById('stopwatchBtn');
+const stopwatchDisplay = document.getElementById('stopwatchDisplay');
+const torchResult = document.getElementById('torchResult');
+const torchAttemptsText = document.getElementById('torchAttemptsText');
+
+let swRunning = false;
+let swStart = 0;
+let swRaf = null;
+let attempt = 0;
+const TOTAL_ATTEMPTS = 3;
+let lightBoosted = false;
+
+function tickStopwatch(){
+  const elapsed = (performance.now() - swStart) / 1000;
+  stopwatchDisplay.textContent = elapsed.toFixed(2) + 's';
+  swRaf = requestAnimationFrame(tickStopwatch);
+}
+
+stopwatchBtn.addEventListener('click', ()=>{
+  if(lightBoosted && attempt >= TOTAL_ATTEMPTS){
+    overlayTorch.classList.remove('active');
+    return;
+  }
+
+  if(!swRunning){
+    swRunning = true;
+    swStart = performance.now();
+    stopwatchBtn.textContent = 'PARAR';
+    torchResult.textContent = '';
+    swRaf = requestAnimationFrame(tickStopwatch);
+    return;
+  }
+
+  // parou o cronômetro
+  swRunning = false;
+  cancelAnimationFrame(swRaf);
+  attempt++;
+  const realElapsed = (performance.now() - swStart) / 1000;
+
+  if(attempt < TOTAL_ATTEMPTS){
+    stopwatchDisplay.textContent = realElapsed.toFixed(2) + 's';
+    const diff = Math.abs(realElapsed - 3);
+    torchResult.textContent = 'Faltou ' + diff.toFixed(2) + 's pros 3 segundos certinhos. Tenta de novo!';
+    torchAttemptsText.textContent = 'Tentativa ' + (attempt+1);
+    stopwatchBtn.textContent = 'Começar';
+  } else {
+    // 3ª tentativa: erro de propósito, não importa o tempo real
+    const fakeWrong = (0.3 + Math.random()*1.3).toFixed(2);
+    stopwatchDisplay.textContent = fakeWrong + 's';
+    torchResult.textContent = 'Ahh, quase isso...';
+    stopwatchBtn.textContent = 'Começar';
+    stopwatchBtn.disabled = true;
+
+    setTimeout(()=>{
+      torchResult.innerHTML = 'Ixi... 🤭 <b>TA DE HACK</b> kkkkk';
+      setTimeout(()=>{
+        lightBoosted = true;
+        setTorchSize(170);
+        torchResult.innerHTML += '<br>Mentira, a luz aumenta de qualquer jeito ✨<br>Agora dá pra ver melhor pra achar o tesouro.';
+        stopwatchBtn.textContent = 'Fechar';
+        stopwatchBtn.disabled = false;
+      }, 1400);
+    }, 1100);
+  }
+});
+
 
 function buildVideoEmbed(){
   const inner = document.getElementById('videoInner');

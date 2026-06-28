@@ -334,13 +334,169 @@
     .clue{animation:none;}
     .chest-btn.ready{animation:none;}
   }
+
+  /* ---------- intro cinematográfica ---------- */
+  .intro-screen{
+    position:fixed;inset:0;z-index:200;
+    background:radial-gradient(ellipse at 50% 18%, #1B2A4A 0%, #0E1730 55%, #060A18 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    overflow:hidden;padding:24px;
+    transition:opacity .7s ease;
+  }
+  .intro-screen.fade-out{opacity:0;pointer-events:none;}
+
+  .stars-field{position:absolute;inset:0;pointer-events:none;}
+  .star{
+    position:absolute;border-radius:50%;
+    background:#fff;
+    animation:twinkle 2.6s ease-in-out infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:1;}}
+
+  .shooting-star{
+    position:absolute;width:2px;height:2px;border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 6px 1px #fff;
+    opacity:0;
+    animation:shoot 3.4s linear infinite;
+    pointer-events:none;
+  }
+  .shooting-star::before{
+    content:'';
+    position:absolute;top:50%;right:0;
+    width:90px;height:1px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    transform:translateY(-50%);
+  }
+  .shooting-star.s1{ top:8%; left:20%; animation-delay:.3s; }
+  .shooting-star.s2{ top:14%; left:70%; animation-delay:1.6s; animation-duration:2.8s; }
+  .shooting-star.s3{ top:30%; left:45%; animation-delay:2.9s; animation-duration:4s; }
+  @keyframes shoot{
+    0%{ transform:translate(0,0) rotate(-45deg); opacity:0; }
+    6%{ opacity:1; }
+    75%{ opacity:1; }
+    100%{ transform:translate(-300px,300px) rotate(-45deg); opacity:0; }
+  }
+
+  .scroll-map{
+    position:relative;width:74%;max-width:300px;
+    height:0;padding-bottom:58%;
+    margin:0 auto 30px;
+    z-index:2;
+  }
+  .map-paper{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 28% 22%, rgba(255,255,255,0.22), transparent 55%),
+      linear-gradient(160deg, #E7C277 0%, #C9974C 55%, #A9742A 100%);
+    border-radius:10px;
+    box-shadow:0 16px 36px rgba(0,0,0,0.55);
+    clip-path:inset(50% 0% 50% 0%);
+    animation:unroll 1.7s ease-out forwards;
+    animation-delay:.35s;
+  }
+  .map-paper::before{
+    content:'';
+    position:absolute;inset:13px;
+    border:2px dashed rgba(122,75,32,0.55);
+    border-radius:8px;
+  }
+  .map-paper .compass-ico{
+    position:absolute;right:14px;bottom:10px;font-size:24px;opacity:.85;
+  }
+  .map-paper .x-ico{
+    position:absolute;left:50%;top:48%;
+    transform:translate(-50%,-50%);
+    font-family:'Baloo 2', sans-serif;
+    font-size:30px;font-weight:700;color:#7A2A1E;
+    opacity:.8;
+  }
+  @keyframes unroll{
+    0%{ clip-path:inset(50% 0% 50% 0%); }
+    100%{ clip-path:inset(0% 0% 0% 0%); }
+  }
+  .rod{
+    position:absolute;left:-7%;right:-7%;height:13px;
+    background:linear-gradient(180deg,#9a6a3e,#5c3a1d);
+    border-radius:8px;box-shadow:0 3px 7px rgba(0,0,0,0.45);
+    z-index:3;
+    top:50%;transform:translateY(-50%);
+    animation-duration:1.7s;
+    animation-timing-function:ease-out;
+    animation-fill-mode:forwards;
+    animation-delay:.35s;
+  }
+  .rod-top{ animation-name:rodUp; }
+  .rod-bottom{ animation-name:rodDown; }
+  @keyframes rodUp{ 0%{ top:50%; } 100%{ top:0%; } }
+  @keyframes rodDown{ 0%{ top:50%; } 100%{ top:100%; } }
+
+  .intro-line{
+    text-align:center;margin:0 auto 4px;
+  }
+  .intro-line .word{
+    display:inline-block;opacity:0;transform:translateY(16px);
+    animation:wordUp .6s ease forwards;
+  }
+  @keyframes wordUp{ to{ opacity:1; transform:translateY(0); } }
+  .line-date, .line-where{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:clamp(20px,6.5vw,30px);
+    color:#F4D9A0;
+    letter-spacing:.04em;
+  }
+  .line-date{ color:#FFE9C2; font-size:clamp(18px,5.5vw,26px); margin-top:2px; }
+  .line-pretty{
+    font-family:'Quicksand', sans-serif;
+    font-style:italic;font-weight:600;
+    font-size:clamp(15px,4.2vw,18px);
+    color:#FFD3DE;
+    margin-top:14px;
+  }
+
+  .intro-continue{
+    margin-top:30px;opacity:0;
+    transition:opacity .6s ease;
+  }
+  .intro-continue.show{opacity:1;}
+
+  @media (prefers-reduced-motion: reduce){
+    .star{animation:none;opacity:.6;}
+    .shooting-star{display:none;}
+    .map-paper, .rod-top, .rod-bottom{animation:none;clip-path:none;top:0%;}
+    .rod-bottom{top:100%;}
+    .intro-line .word{animation:none;opacity:1;transform:none;}
+  }
 </style>
 </head>
 <body>
 
+  <div class="intro-screen" id="introScreen">
+    <div class="stars-field" id="starsField"></div>
+    <div class="shooting-star s1"></div>
+    <div class="shooting-star s2"></div>
+    <div class="shooting-star s3"></div>
+
+    <div class="scroll-map">
+      <div class="rod rod-top"></div>
+      <div class="map-paper">
+        <span class="x-ico">X</span>
+        <span class="compass-ico">🧭</span>
+      </div>
+      <div class="rod rod-bottom"></div>
+    </div>
+
+    <div class="intro-line line-where" id="introLine1"></div>
+    <div class="intro-line line-date" id="introLine2"></div>
+    <div class="intro-line line-pretty" id="introLine3"></div>
+
+    <button class="btn intro-continue" id="introContinue">Continuar ✨</button>
+  </div>
+
   <div class="header">
     <div class="eyebrow">uma caça ao tesouro só nossa</div>
-    <h1>1 Mês de Nós 💛</h1>
+    <h1>1 Mês de Nós 🤍</h1>
     <p>Amizade e namoro nascendo juntos, no mesmo capítulo 🥰 Encontre as 6 pistas escondidas no mapa e descubra o que está esperando por você no final.</p>
   </div>
 
@@ -414,7 +570,7 @@
     <div class="card" id="card-treasure">
       <button class="close" id="closeTreasure">✕</button>
       <span class="icon-big">🎁</span>
-      <h2>Feliz 1 Mês 💛</h2>
+      <h2>Feliz 1 Mês 🤍</h2>
       <p>Gravei isso porque tem coisa que palavra escrita não entrega do mesmo jeito.</p>
       <div class="video-frame" id="videoFrame">
         <div class="video-inner" id="videoInner"></div>
@@ -505,7 +661,6 @@ document.getElementById('startBtn').addEventListener('click', ()=>{
   overlayIntro.classList.remove('active');
   overlayTorch.classList.add('active');
 });
-overlayIntro.classList.add('active');
 
 document.getElementById('reopenTorch').addEventListener('click', ()=> overlayTorch.classList.add('active'));
 overlayTorch.addEventListener('click', (e)=>{ if(e.target===overlayTorch) overlayTorch.classList.remove('active'); });
@@ -610,7 +765,7 @@ stopwatchBtn.addEventListener('click', ()=>{
     stopwatchBtn.disabled = true;
 
     setTimeout(()=>{
-      torchResult.innerHTML = 'Ixi... 🤭 <b>TA DE HACK</b> kkkkk';
+      torchResult.innerHTML = 'Ixi... 🤭 <b>TA DE HACK</b> ksksks';
       setTimeout(()=>{
         lightBoosted = true;
         setTorchSize(170);
@@ -647,6 +802,62 @@ function buildVideoEmbed(){
     inner.innerHTML = '<video controls playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;"><source src="' + VIDEO_URL + '">Seu navegador não suporta vídeo HTML5.</video>';
   }
 }
+
+/* ---------- intro cinematográfica: céu, estrelas e texto ---------- */
+const starsField = document.getElementById('starsField');
+const starCount = 55;
+for(let i=0;i<starCount;i++){
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = (Math.random()*2 + 1).toFixed(1);
+  s.style.width = size + 'px';
+  s.style.height = size + 'px';
+  s.style.left = (Math.random()*100) + '%';
+  s.style.top = (Math.random()*70) + '%';
+  s.style.animationDelay = (Math.random()*2.6).toFixed(2) + 's';
+  starsField.appendChild(s);
+}
+
+function revealLine(containerId, text, wordDelayMs){
+  const container = document.getElementById(containerId);
+  const words = text.split(' ');
+  words.forEach((w, i)=>{
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w + (i < words.length-1 ? '\u00A0' : '');
+    span.style.animationDelay = (i * wordDelayMs / 1000) + 's';
+    container.appendChild(span);
+  });
+  return words.length * wordDelayMs;
+}
+
+const introContinue = document.getElementById('introContinue');
+const introScreen = document.getElementById('introScreen');
+
+setTimeout(()=>{
+  revealLine('introLine1', 'ONDE TUDO COMEÇOU', 140);
+}, 2150);
+
+setTimeout(()=>{
+  revealLine('introLine2', '28 / 05 / 2026', 160);
+}, 3350);
+
+setTimeout(()=>{
+  revealLine('introLine3', 'Você é linda e maravilhosa, Sthefany 🤍', 90);
+}, 4450);
+
+setTimeout(()=>{
+  introContinue.classList.add('show');
+}, 6100);
+
+introContinue.addEventListener('click', ()=>{
+  introScreen.classList.add('fade-out');
+  setTimeout(()=>{
+    introScreen.style.display = 'none';
+    overlayIntro.classList.add('active');
+  }, 700);
+});
+
 </script>
 </body>
 </html>

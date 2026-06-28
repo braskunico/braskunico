@@ -562,6 +562,58 @@
     margin-left:2px;
   }
 
+  /* ---------- verso de Cânticos no modal do tesouro ---------- */
+  .canticos-verse{
+    background:linear-gradient(135deg,#fff8ea,#fef0d4);
+    border:1.5px solid var(--gold);
+    border-radius:16px;
+    padding:16px 18px 14px;
+    margin:10px 0 16px;
+    position:relative;
+  }
+  .canticos-verse::before{
+    content:'"';
+    position:absolute;top:-14px;left:14px;
+    font-family:'Baloo 2',sans-serif;
+    font-size:52px;color:var(--gold);
+    opacity:.35;line-height:1;
+  }
+  .canticos-icon{font-size:22px;display:block;margin-bottom:6px;}
+  .canticos-text{
+    font-family:'Baloo 2',sans-serif;
+    font-size:17px;font-weight:600;
+    color:#7A3E1A;
+    line-height:1.55;
+    margin:0 0 4px;
+    font-style:italic;
+  }
+  .canticos-ref{
+    font-size:12px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold-dark);
+    margin:0 0 10px;opacity:.85;
+  }
+  .canticos-sub{
+    font-size:14px;color:var(--ink);line-height:1.5;
+    margin:0;opacity:.85;
+  }
+
+  /* texto das pistas com quebra de linha (verso bíblico) */
+  #clueText{
+    white-space:pre-line;
+    font-size:15.5px;
+    line-height:1.65;
+  }
+  #clueText .verse-block{
+    display:block;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px dashed var(--gold);
+    font-style:italic;
+    color:#7A3E1A;
+    font-size:14px;
+    line-height:1.6;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .star{animation:none;opacity:.6;}
     .shooting-star{display:none;}
@@ -684,6 +736,15 @@
       <button class="close" id="closeTreasure">✕</button>
       <span class="icon-big">🎁</span>
       <h2>Feliz 1 Mês 🤍</h2>
+
+      <!-- elogio bíblico de Cânticos -->
+      <div class="canticos-verse">
+        <span class="canticos-icon">🕊️</span>
+        <p class="canticos-text">"Toda formosa és tu, amada minha,<br>e não há em ti defeito algum."</p>
+        <p class="canticos-ref">Cânticos 4:7</p>
+        <p class="canticos-sub">Quando li isso pela primeira vez, pensei em você. Não é coincidência — é Deus confirmando o que eu já sentia. 🙈🤍</p>
+      </div>
+
       <p>Gravei isso porque tem coisa que palavra escrita não entrega do mesmo jeito.</p>
       <div class="video-frame" id="videoFrame">
         <div class="video-inner" id="videoInner"></div>
@@ -719,12 +780,31 @@ const VIDEO_URL = "onemonth.mp4";
 /* ===================================================================== */
 
 const clues = [
-  { id:1, x:20, y:33, icon:'🐚', title:'A Concha', text:'Há um mês, uma conversa qualquer virou o início de tudo isso. Quem diria que ia dar nisso aqui 🥰' },
-  { id:2, x:78, y:25, icon:'⚓', title:'A Âncora', text:'Antes de ser namoro, já era parceria. Essa é a nossa âncora — não importa o resto, ela nos mantém firmes.' },
-  { id:3, x:30, y:52, icon:'🦀', title:'O Caranguejo', text:'Tem coisa que só a gente entende: as piadas bobas, os memes, esse nosso jeito de ser engraçado sem nem tentar 🤭' },
-  { id:4, x:70, y:58, icon:'🧭', title:'A Bússola', text:'Não sei exatamente pra onde isso vai dar. Só sei que quero descobrir esse caminho do seu lado.' },
-  { id:5, x:22, y:78, icon:'🪙', title:'A Moeda', text:'Trinta dias, e já perdi a conta de quantas vezes agradeci a Deus por você ter entrado na minha vida 🙈' },
-  { id:6, x:80, y:80, icon:'🗝️', title:'A Chave', text:'Essa é a chave. Vai lá abrir o tesouro — tem uma coisa esperando por você. ✨', isKey:true }
+  {
+    id:1, x:20, y:33, icon:'🐚', title:'A Concha',
+    text:'Há um mês, uma conversa qualquer virou o início de tudo isso. Quem diria que ia dar nisso aqui 🥰\n\n✦ Cânticos 1:15 — "Eis que és formosa, amada minha; eis que és formosa, os teus olhos são como os de pomba."'
+  },
+  {
+    id:2, x:78, y:25, icon:'⚓', title:'A Âncora',
+    text:'Antes de ser namoro, já era parceria. Essa é a nossa âncora — não importa o resto, ela nos mantém firmes.\n\n✦ Cânticos 2:4 — "Ele me introduziu na casa do banquete, e o seu estandarte sobre mim era o amor."'
+  },
+  {
+    id:3, x:30, y:52, icon:'🦀', title:'O Caranguejo',
+    text:'Tem coisa que só a gente entende: as piadas bobas, os memes, esse nosso jeito de ser engraçado sem nem tentar 🤭\n\n✦ Cânticos 2:3 — "Qual a macieira entre as árvores do bosque, tal é o meu amado entre os filhos. À sua sombra me deleito e me assento, e o seu fruto é doce ao meu paladar."'
+  },
+  {
+    id:4, x:70, y:58, icon:'🧭', title:'A Bússola',
+    text:'Não sei exatamente pra onde isso vai dar. Só sei que quero descobrir esse caminho do seu lado.\n\n✦ Cânticos 6:3 — "Eu sou do meu amado, e o meu amado é meu." — é isso que quero poder dizer um dia 🙈'
+  },
+  {
+    id:5, x:22, y:78, icon:'🪙', title:'A Moeda',
+    text:'Trinta dias, e já perdi a conta de quantas vezes agradeci a Deus por você ter entrado na minha vida 🙈\n\n✦ Cânticos 4:7 — "Toda formosa és tu, amada minha, e não há em ti defeito algum." — e isso não é poesia, é verdade mesmo.'
+  },
+  {
+    id:6, x:80, y:80, icon:'🗝️', title:'A Chave',
+    text:'Essa é a chave. Vai lá abrir o tesouro — tem uma coisa esperando por você. ✨\n\n✦ Cânticos 8:7 — "As muitas águas não podem apagar o amor, nem os rios o podem submergir." — guarda isso no coração. 🤍',
+    isKey:true
+  }
 ];
 
 let foundCount = 0;
@@ -772,7 +852,26 @@ function openClue(c){
   }
   document.getElementById('clueIcon').textContent = c.icon;
   document.getElementById('clueTitle').textContent = c.title;
-  document.getElementById('clueText').textContent = c.text;
+
+  // separa o texto principal do verso bíblico (marcado com ✦)
+  const parts = c.text.split('\n\n✦ ');
+  const mainText = parts[0];
+  const verseText = parts[1] ? '✦ ' + parts[1] : null;
+
+  const clueTextEl = document.getElementById('clueText');
+  clueTextEl.innerHTML = '';
+
+  const mainSpan = document.createElement('span');
+  mainSpan.textContent = mainText;
+  clueTextEl.appendChild(mainSpan);
+
+  if(verseText){
+    const verseEl = document.createElement('span');
+    verseEl.className = 'verse-block';
+    verseEl.textContent = verseText;
+    clueTextEl.appendChild(verseEl);
+  }
+
   overlayClue.classList.add('active');
 }
 

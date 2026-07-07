@@ -144,15 +144,9 @@
     color: rgba(62,42,44,0.6);
   }
 
-  /* ======= QUESTION CARD ======= */
-  #question-screen{
-    display:none;
-    text-align:center;
-  }
-  #question-screen.active{
-    display:block;
-    animation: appear .6s ease both;
-  }
+  /* ======= GENERIC SCREEN / CARD ======= */
+  .screen{ display:none; text-align:center; }
+  .screen.active{ display:block; animation: appear .6s ease both; }
 
   @keyframes appear{
     from{ opacity:0; transform: translateY(14px); }
@@ -188,15 +182,51 @@
     font-family:'Playfair Display', serif;
     font-style:italic;
     font-weight:600;
-    font-size: clamp(28px, 7vw, 40px);
+    font-size: clamp(24px, 6.4vw, 36px);
     margin: 4px 0 6px;
     color: var(--ink);
+    line-height:1.3;
   }
   .question-sub{
     font-family:'Caveat', cursive;
     font-size: 22px;
     color: var(--rose-deep);
     margin-bottom: 26px;
+  }
+
+  /* ======= ASSINATURA ======= */
+  .sign-line{
+    margin: 22px auto 8px;
+    max-width: 380px;
+  }
+  #signatureInput{
+    width:100%;
+    border:none;
+    border-bottom: 3px solid var(--rose-deep);
+    background:transparent;
+    text-align:center;
+    font-family:'Caveat', cursive;
+    font-size: 30px;
+    color: var(--rose-deep);
+    padding: 10px 6px;
+    outline:none;
+  }
+  #signatureInput::placeholder{
+    color: rgba(142,26,62,0.35);
+    font-family:'Quicksand', sans-serif;
+    font-size: 15px;
+  }
+  .sign-caption{
+    font-size: 13px;
+    color: rgba(62,42,44,0.55);
+    margin-top: 6px;
+  }
+  .sign-preview{
+    margin-top: 18px;
+    font-family:'Caveat', cursive;
+    font-size: 26px;
+    color: var(--ink);
+    min-height: 30px;
   }
 
   .btn-zone{
@@ -221,6 +251,7 @@
     user-select:none;
     -webkit-user-select:none;
   }
+  .btn:disabled{ opacity:.45; cursor:not-allowed; }
 
   .btn-yes{
     background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
@@ -257,14 +288,39 @@
     margin-top: 18px;
   }
 
-  /* ======= RESULT SCREEN ======= */
-  #result-screen{ display:none; text-align:center; }
-  #result-screen.active{ display:block; animation: appear .5s ease both; }
+  /* ======= PADRE / REAÇÕES ======= */
+  .padre-emoji{
+    font-size: 46px;
+    margin-bottom: 6px;
+  }
+  .padre-line{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size: clamp(22px, 5.6vw, 28px);
+    margin: 10px 0 6px;
+    min-height: 40px;
+  }
+  .padre-sub{
+    font-family:'Caveat', cursive;
+    font-size: 20px;
+    color: var(--rose-deep);
+    margin-bottom: 22px;
+    min-height: 26px;
+  }
+  .padre-step{
+    display:none;
+  }
+  .padre-step.active{
+    display:block;
+    animation: appear .5s ease both;
+  }
+  audio{ display:none; }
 
+  /* ======= RESULT SCREEN ======= */
   .result-msg{
     font-family:'Playfair Display', serif;
     font-weight:700;
-    font-size: clamp(24px, 6vw, 32px);
+    font-size: clamp(22px, 5.6vw, 30px);
     margin: 4px 0 10px;
   }
   .result-sub{
@@ -395,15 +451,35 @@
     <p class="hint">(toque ou clique no envelope)</p>
   </div>
 
-  <!-- TELA 2: PERGUNTA -->
-  <div id="question-screen">
+  <!-- TELA 2: ASSINATURA -->
+  <div id="signature-screen" class="screen">
+    <div class="card">
+      <div class="doodle-row">✎ ⋆｡˚ ♡ ˚｡⋆ ✎</div>
+      <h2 class="question">Antes de tudo...</h2>
+      <p class="question-sub">assina aqui embaixo, igualzinho num casamento de verdade kk</p>
+
+      <div class="sign-line">
+        <input type="text" id="signatureInput" placeholder="seu nome completo aqui" autocomplete="off">
+        <p class="sign-caption">(é só pra deixar tudo mais oficial 📜✍️)</p>
+      </div>
+
+      <div class="sign-preview" id="signPreview"></div>
+
+      <div class="btn-zone" style="min-height:auto; margin-top:18px;">
+        <button class="btn btn-yes" id="btnSign" disabled>Assinar e continuar ✍️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA 3: PERGUNTA -->
+  <div id="question-screen" class="screen">
     <div class="card">
       <div class="doodle-row">✦ ⋆ ˚｡⋆ ♡ ⋆｡˚ ⋆ ✦</div>
-      <h2 class="question">Você quer casar comigo?</h2>
+      <h2 class="question" id="questionText">Você quer casar comigo?</h2>
       <p class="question-sub">é sério, mas também não kkkk</p>
 
       <div class="btn-zone" id="btnZone">
-        <button class="btn btn-yes" id="btnYes">Sim, quero! 💍</button>
+        <button class="btn btn-yes" id="btnYes">Sim, aceito! 💍</button>
         <button class="btn btn-no" id="btnNo">Não</button>
       </div>
 
@@ -412,8 +488,46 @@
     </div>
   </div>
 
-  <!-- TELA 3: RESULTADO -->
-  <div id="result-screen">
+  <!-- TELA 4: REAÇÃO DO "PADRE" -->
+  <div id="padre-screen" class="screen">
+    <div class="card">
+
+      <div class="padre-step active" id="padreStep1">
+        <div class="padre-emoji">🧐</div>
+        <p class="padre-line">Hummmm... interessante...</p>
+        <p class="padre-sub">o padre ficou pensativo com sua resposta 👀</p>
+        <div class="btn-zone" style="min-height:auto;">
+          <button class="btn btn-yes" id="btnPadreNext1">Continuar</button>
+        </div>
+      </div>
+
+      <div class="padre-step" id="padreStep2">
+        <div class="padre-emoji">🙏</div>
+        <p class="padre-line">O padre tem uma pergunta pra você...</p>
+        <p class="padre-sub">toca o play pra ouvir 🎙️</p>
+        <audio id="padreAudio" src="donada.mp3" preload="auto"></audio>
+        <div class="btn-zone" style="min-height:auto;">
+          <button class="btn btn-yes" id="btnPlayAudio">▶️ Ouvir o padre</button>
+        </div>
+        <div class="btn-zone" style="min-height:auto; margin-top:14px;">
+          <button class="btn btn-no" id="btnPadreNext2" style="position:static;">Já ouvi, continuar</button>
+        </div>
+      </div>
+
+      <div class="padre-step" id="padreStep3">
+        <div class="padre-emoji">😱</div>
+        <p class="padre-line">OMAGAAAAA</p>
+        <p class="padre-sub">vocês vão mesmo casar né kkkkkk</p>
+        <div class="btn-zone" style="min-height:auto;">
+          <button class="btn btn-yes" id="btnPadreFinal">Seguir para o final 💍</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TELA 5: RESULTADO -->
+  <div id="result-screen" class="screen">
     <div class="card">
       <p class="result-msg" id="resultMsg">Prontinho, estamos casados! 💍🤭</p>
       <p class="result-sub" id="resultSub">agora não tem mais volta... HAAHAHAHAHAHAHAAH 🙈</p>
@@ -440,6 +554,9 @@
 <div class="confetti" id="confetti"></div>
 
 <script>
+  // ---------- nome de quem está respondendo ----------
+  let herName = "";
+
   // ---------- corações de fundo ----------
   const bgHearts = document.getElementById('bgHearts');
   const heartChars = ['♥','♡','💕'];
@@ -453,21 +570,47 @@
     bgHearts.appendChild(s);
   }
 
-  // ---------- envelope -> pergunta ----------
+  function showScreen(el){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ---------- envelope -> assinatura ----------
   const envelope = document.getElementById('envelope');
   const envelopeScreen = document.getElementById('envelope-screen');
+  const signatureScreen = document.getElementById('signature-screen');
   const questionScreen = document.getElementById('question-screen');
+  const padreScreen = document.getElementById('padre-screen');
+  const resultScreen = document.getElementById('result-screen');
 
   function openEnvelope(){
     if(envelope.classList.contains('open')) return;
     envelope.classList.add('open');
     setTimeout(()=>{
       envelopeScreen.style.display = 'none';
-      questionScreen.classList.add('active');
+      showScreen(signatureScreen);
     }, 550);
   }
   envelope.addEventListener('click', openEnvelope);
   envelope.addEventListener('keypress', (e)=>{ if(e.key==='Enter') openEnvelope(); });
+
+  // ---------- assinatura ----------
+  const signatureInput = document.getElementById('signatureInput');
+  const signPreview = document.getElementById('signPreview');
+  const btnSign = document.getElementById('btnSign');
+  const questionText = document.getElementById('questionText');
+
+  signatureInput.addEventListener('input', ()=>{
+    const val = signatureInput.value.trim();
+    signPreview.textContent = val ? val : '';
+    btnSign.disabled = val.length < 2;
+  });
+
+  btnSign.addEventListener('click', ()=>{
+    herName = signatureInput.value.trim() || "você";
+    questionText.innerHTML = `${herName}, você aceita <u>Luiz Eduardo</u> como seu legítimo esposo,<br>na alegria e na tristeza,<br>na saúde e na doença,<br>até que a zoeira os separe?`;
+    showScreen(questionScreen);
+  });
 
   // ---------- botão "não" fujão ----------
   const btnZone = document.getElementById('btnZone');
@@ -506,12 +649,10 @@
     clearTimeout(dodge._t);
     dodge._t = setTimeout(()=> taunt.classList.remove('show'), 1800);
 
-    // botão sim cresce um pouquinho a cada fuga, até um limite
     yesScale = Math.min(yesScale + 0.035, 1.35);
     btnYes.style.transform = `scale(${yesScale})`;
   }
 
-  // posição inicial do botão não (relativa)
   function placeInitialNo(){
     btnNo.style.position = 'absolute';
     const zoneRect = btnZone.getBoundingClientRect();
@@ -521,7 +662,6 @@
   }
   window.addEventListener('load', ()=> setTimeout(placeInitialNo, 50));
 
-  // dispara em hover (mouse) e toque (mobile), sempre antes do click "pegar"
   ['mouseenter','touchstart','pointerdown'].forEach(evt=>{
     btnNo.addEventListener(evt, function(e){
       e.preventDefault();
@@ -529,7 +669,6 @@
     }, {passive:false});
   });
 
-  // fallback: se por algum milagre o clique acontecer, ainda assim é brincadeira
   btnNo.addEventListener('click', function(e){
     e.preventDefault();
     dodge();
@@ -551,17 +690,39 @@
     }
   }
 
-  // ---------- clicar em SIM ----------
-  const resultScreen = document.getElementById('result-screen');
-  const stickerWrap = document.getElementById('stickerWrap');
-  const stickerCaption = document.getElementById('stickerCaption');
-  const certBtn = document.getElementById('certBtn');
-  const certWrap = document.getElementById('certWrap');
+  // ---------- clicar em SIM -> reações do "padre" ----------
+  const padreStep1 = document.getElementById('padreStep1');
+  const padreStep2 = document.getElementById('padreStep2');
+  const padreStep3 = document.getElementById('padreStep3');
+  const padreAudio = document.getElementById('padreAudio');
+
+  function showPadreStep(step){
+    [padreStep1, padreStep2, padreStep3].forEach(s => s.classList.remove('active'));
+    step.classList.add('active');
+  }
 
   btnYes.addEventListener('click', function(){
+    showPadreStep(padreStep1);
+    showScreen(padreScreen);
+  });
+
+  document.getElementById('btnPadreNext1').addEventListener('click', ()=>{
+    showPadreStep(padreStep2);
+  });
+
+  document.getElementById('btnPlayAudio').addEventListener('click', ()=>{
+    padreAudio.currentTime = 0;
+    padreAudio.play().catch(()=>{ /* autoplay/format issue: usuário pode tentar de novo */ });
+  });
+
+  document.getElementById('btnPadreNext2').addEventListener('click', ()=>{
+    showPadreStep(padreStep3);
+  });
+
+  document.getElementById('btnPadreFinal').addEventListener('click', ()=>{
     launchConfetti();
-    questionScreen.classList.remove('active');
-    resultScreen.classList.add('active');
+    document.getElementById('resultMsg').textContent = `Prontinho, ${herName} e Luiz Eduardo estão casados! 💍🤭`;
+    showScreen(resultScreen);
 
     setTimeout(()=>{
       stickerWrap.classList.add('pop');
@@ -575,6 +736,12 @@
       certBtn.classList.add('show');
     }, 1500);
   });
+
+  // ---------- resultado ----------
+  const stickerWrap = document.getElementById('stickerWrap');
+  const stickerCaption = document.getElementById('stickerCaption');
+  const certBtn = document.getElementById('certBtn');
+  const certWrap = document.getElementById('certWrap');
 
   certBtn.addEventListener('click', function(){
     certWrap.classList.add('show');

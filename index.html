@@ -2,1215 +2,588 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 Mês de Nós — Caça ao Tesouro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Um pedido especial 💌</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme: light;
-    --sky1:#FFE7B0;
-    --sky2:#FFC97A;
-    --sea1:#3FAFB0;
-    --sea2:#1E7A85;
-    --sand1:#F4DDA8;
-    --sand2:#E7C277;
-    --gold:#E2A93B;
-    --gold-dark:#A9742A;
-    --ink:#2B2118;
-    --cream:#FFF8EA;
-    --wood:#7A4B2C;
+    --paper: #FBF1E7;
+    --paper-2: #F7E9DA;
+    --ink: #3E2A2C;
+    --rose: #C9184A;
+    --rose-deep: #8E1A3E;
+    --pink-soft: #FFD1DC;
+    --gold: #D4A373;
+    --sage: #7C9473;
+    --shadow: rgba(62,42,44,0.18);
   }
 
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-  body{
-    background:var(--cream);
-    color:var(--ink);
+  html,body{
+    margin:0; padding:0; width:100%; min-height:100%;
+    background: var(--paper);
+    color: var(--ink);
     font-family:'Quicksand', sans-serif;
-    min-height:100vh;
     overflow-x:hidden;
   }
 
-  /* ---------- header ---------- */
-  .header{
-    max-width:540px;margin:0 auto;
-    padding:46px 22px 14px;
-    text-align:center;
-  }
-  .header .eyebrow{
-    font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--gold-dark);opacity:.85;
-  }
-  .header h1{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:clamp(32px,8vw,46px);
-    margin:6px 0 2px;
-    color:#C0512F;
-    line-height:1.05;
-  }
-  .header p{
-    font-size:15.5px;max-width:360px;margin:8px auto 0;
-    opacity:.85;line-height:1.5;
-  }
-
-  /* ---------- progress ---------- */
-  .progress-wrap{
-    max-width:340px;margin:18px auto 8px;
-    display:flex;align-items:center;justify-content:center;gap:8px;
-  }
-  .dot{
-    width:16px;height:16px;border-radius:50%;
-    background:#E3CFA1;
-    border:2px solid var(--gold-dark);
-    transition:background .25s ease, transform .25s ease;
-  }
-  .dot.found{
-    background:var(--gold);
-    transform:scale(1.15);
-    box-shadow:0 0 8px rgba(226,169,59,0.7);
-  }
-  .progress-text{
-    text-align:center;font-size:13.5px;color:var(--gold-dark);
-    font-weight:600;margin-bottom:18px;
-  }
-
-  /* ---------- scene ---------- */
-  .scene-wrap{
-    max-width:540px;margin:0 auto;padding:0 16px 50px;
-  }
-  .scene-frame{
+  body{
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(201,24,74,0.06) 0, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(212,163,115,0.10) 0, transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(124,148,115,0.08) 0, transparent 40%);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
     position:relative;
-    width:100%;
-    height:0;
-    padding-bottom:128%;
-    border-radius:26px;
-    overflow:hidden;
-    box-shadow:0 18px 40px rgba(60,30,10,0.25);
-    border:6px solid var(--cream);
-    touch-action:none;
-  }
-  .scene{
-    position:absolute;top:0;left:0;right:0;bottom:0;
-  }
-  .layer-sky{
-    position:absolute;top:0;left:0;right:0;height:46%;
-    background:linear-gradient(180deg,var(--sky1) 0%, var(--sky2) 100%);
-  }
-  .layer-sea{
-    position:absolute;top:38%;left:0;right:0;height:32%;
-    background:linear-gradient(180deg,var(--sea1) 0%, var(--sea2) 100%);
-  }
-  .layer-sea::before{
-    content:'';
-    position:absolute;top:-6px;left:0;right:0;height:14px;
-    background:repeating-linear-gradient(115deg, rgba(255,255,255,0.55) 0 10px, transparent 10px 22px);
-    opacity:.7;
-  }
-  .layer-sand{
-    position:absolute;top:64%;left:0;right:0;bottom:0;
-    background:linear-gradient(180deg,var(--sand1) 0%, var(--sand2) 100%);
-  }
-  .layer-sand::before{
-    content:'';
-    position:absolute;top:-10px;left:0;right:0;height:20px;
-    background:radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.5), transparent 70%);
   }
 
-  .deco{
-    position:absolute;transform:translate(-50%,-50%);
-    font-size:30px;pointer-events:none;user-select:none;
-    filter:drop-shadow(0 3px 4px rgba(0,0,0,0.15));
+  /* corações flutuantes de fundo */
+  .bg-hearts{
+    position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
   }
-  .deco.small{font-size:22px;}
-  .deco.cloud{font-size:34px;opacity:.9;}
-
-  /* ---------- hidden clue buttons ---------- */
-  .clue{
-    position:absolute;transform:translate(-50%,-50%);
-    width:54px;height:54px;border-radius:50%;
-    background:rgba(255,248,234,0.55);
-    border:2px dashed var(--gold-dark);
-    display:flex;align-items:center;justify-content:center;
-    font-size:26px;
-    cursor:pointer;
-    -webkit-appearance:none;appearance:none;
-    -webkit-tap-highlight-color:transparent;
-    padding:0;margin:0;font-family:inherit;
-    animation:cluePulse 2.2s ease-in-out infinite;
-    transition:transform .15s ease, opacity .25s ease;
-  }
-  .clue:hover{transform:translate(-50%,-50%) scale(1.08);}
-  .clue.found{
-    opacity:.4;
-    animation:none;
-    border-style:solid;
-    cursor:default;
-    pointer-events:none;
-  }
-  .clue.found::after{
-    content:'✓';
+  .bg-hearts span{
     position:absolute;
-    color:#2E7D45 !important;
-    -webkit-text-fill-color:#2E7D45;
-    font-size:16px;font-weight:700;
-    bottom:-4px;right:-4px;
-    background:var(--cream);
-    border-radius:50%;
-    width:20px;height:20px;
-    display:flex;align-items:center;justify-content:center;
-    border:1px solid var(--gold-dark);
+    bottom:-10%;
+    font-size: 22px;
+    color: var(--pink-soft);
+    opacity:0.55;
+    animation: float-up linear infinite;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.04));
   }
-  @keyframes cluePulse{
-    0%,100%{ box-shadow:0 0 0 0 rgba(226,169,59,0.55); }
-    50%{ box-shadow:0 0 0 9px rgba(226,169,59,0); }
-  }
-
-  /* ---------- chest ---------- */
-  .chest-btn{
-    position:absolute;transform:translate(-50%,-50%);
-    width:88px;height:88px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #fff4da, var(--cream) 60%);
-    border:3px solid var(--gold-dark);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:36px;
-    cursor:pointer;
-    -webkit-appearance:none;appearance:none;
-    -webkit-tap-highlight-color:transparent;
-    padding:0;margin:0;font-family:inherit;
-    filter:grayscale(0.7) brightness(.92);
-    box-shadow:0 8px 16px rgba(60,30,10,0.25);
-    transition:transform .25s ease, filter .35s ease, box-shadow .35s ease;
-  }
-  .chest-btn .lock{font-size:15px;margin-top:-4px;}
-  .chest-btn.ready{
-    filter:none;
-    animation:chestReady 1.6s ease-in-out infinite;
-  }
-  .chest-btn.shake{ animation:chestShake .4s ease; }
-  @keyframes chestReady{
-    0%,100%{ transform:translate(-50%,-50%) scale(1); box-shadow:0 8px 16px rgba(60,30,10,0.25), 0 0 0 0 rgba(226,169,59,0.6); }
-    50%{ transform:translate(-50%,-50%) scale(1.07); box-shadow:0 8px 16px rgba(60,30,10,0.25), 0 0 0 14px rgba(226,169,59,0); }
-  }
-  @keyframes chestShake{
-    0%,100%{ transform:translate(-50%,-50%) rotate(0); }
-    25%{ transform:translate(-50%,-50%) rotate(-6deg); }
-    75%{ transform:translate(-50%,-50%) rotate(6deg); }
+  @keyframes float-up{
+    0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.5; }
+    100%{ transform: translateY(-110vh) rotate(25deg); opacity:0; }
   }
 
-  .chest-hint{
-    text-align:center;font-size:13.5px;color:var(--gold-dark);
-    font-weight:600;min-height:20px;margin-top:6px;
-  }
-
-  /* ---------- lanterna no escuro ---------- */
-  .torch{
-    position:absolute;
-    width:120px;height:120px;
-    border-radius:50%;
-    left:50%;top:50%;
-    transform:translate(-50%,-50%);
-    box-shadow:0 0 0 9999px rgba(8,5,3,0.95);
-    pointer-events:none;
-    z-index:30;
-    transition:width .7s ease, height .7s ease, box-shadow .7s ease;
-  }
-  .torch-hint{
-    position:absolute;left:50%;top:50%;
-    transform:translate(-50%,-50%);
-    z-index:35;
-    color:#FFE9C2;
-    font-size:13.5px;font-weight:600;text-align:center;
-    background:rgba(0,0,0,0.35);
-    padding:10px 16px;border-radius:14px;
-    pointer-events:none;
-    transition:opacity .5s ease;
-    width:78%;
-    line-height:1.4;
-  }
-  .torch-hint.hidden{opacity:0;}
-
-  .torch-toggle{
-    display:block;margin:0 auto 14px;
-    background:var(--gold);
-    color:#3A2509 !important;
-    -webkit-text-fill-color:#3A2509;
-    -webkit-appearance:none;appearance:none;
-    border:none;border-radius:20px;
-    font-family:'Quicksand', sans-serif;
-    font-weight:600;font-size:13.5px;
-    padding:8px 18px;cursor:pointer;
-  }
-
-  /* ---------- desafio do cronômetro ---------- */
-  .stopwatch{
-    font-family:'Baloo 2', sans-serif;
-    font-size:40px;color:#C0512F;
-    margin:14px 0 16px;
-    font-weight:700;
-  }
-  .torch-result{
-    min-height:24px;
-    font-size:14.5px;font-weight:600;
-    color:var(--gold-dark);
-    margin-top:10px;line-height:1.5;
-  }
-  .torch-attempts{
-    font-size:12.5px;color:var(--gold-dark);opacity:.8;margin-top:-4px;margin-bottom:4px;
-  }
-
-  /* ---------- overlay / modal ---------- */
-  .overlay{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    background:rgba(43,33,24,0.6);
-    display:none;align-items:center;justify-content:center;
-    padding:18px;z-index:60;
-  }
-  .overlay.active{display:flex;}
-  .card{
-    background:var(--cream);
-    border-radius:20px;
-    max-width:420px;width:100%;
-    max-height:90vh;overflow-y:auto;
-    padding:30px 26px 24px;
+  .stage{
     position:relative;
-    border:3px solid var(--gold);
-    box-shadow:0 24px 50px rgba(43,33,24,0.4);
-    text-align:center;
-  }
-  .card .close{
-    position:absolute;top:12px;right:14px;
-    background:none;border:none;
-    -webkit-appearance:none;appearance:none;
-    font-size:19px;color:var(--gold-dark) !important;
-    -webkit-text-fill-color:var(--gold-dark);
-    cursor:pointer;opacity:.7;line-height:1;
-  }
-  .card .icon-big{font-size:42px;display:block;margin-bottom:6px;}
-  .card h2{
-    font-family:'Baloo 2', sans-serif;
-    font-size:24px;color:#C0512F;margin:4px 0 12px;
-  }
-  .card p{font-size:16.5px;line-height:1.6;color:var(--ink);margin:0;}
-
-  /* intro modal */
-  #card-intro p{margin-bottom:16px;}
-  .btn{
-    font-family:'Quicksand', sans-serif;
-    font-weight:600;font-size:14.5px;
-    padding:10px 22px;border-radius:22px;
-    border:none;background:var(--gold);
-    color:#3A2509 !important;
-    -webkit-text-fill-color:#3A2509;
-    -webkit-appearance:none;appearance:none;
-    cursor:pointer;transition:opacity .15s ease;
-  }
-  .btn:hover{opacity:.85;}
-
-  /* treasure modal */
-  #card-treasure{max-width:460px;}
-  .video-frame{
-    position:relative;width:100%;height:0;padding-bottom:177.7%;
-    max-height:60vh;
-    border-radius:14px;overflow:hidden;background:#111;
-    margin:16px 0 6px;
-  }
-  .video-frame.wide{padding-bottom:56.25%;max-height:none;}
-  .video-inner{position:absolute;top:0;left:0;right:0;bottom:0;}
-  .video-placeholder{
-    position:absolute;top:0;left:0;right:0;bottom:0;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    color:#eee;font-size:13.5px;text-align:center;padding:16px;gap:8px;
-  }
-  .video-placeholder .e{font-size:34px;}
-  .video-placeholder code{
-    background:rgba(255,255,255,0.12);padding:2px 6px;border-radius:6px;font-size:12px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .clue{animation:none;}
-    .chest-btn.ready{animation:none;}
-  }
-
-  /* ---------- intro cinematográfica — CORRIGIDA ---------- */
-  /*
-     Antes: position:fixed + display:flex fazia o intro cobrir a tela mas
-     o conteúdo abaixo ficava num estado estranho em alguns navegadores
-     mobile. Agora usamos z-index alto + pointer-events corretamente e
-     garantimos que ao fechar o intro a tela principal fica visível.
-  */
-  .intro-screen{
-    position:fixed;inset:0;z-index:200;
-    background:radial-gradient(ellipse at 50% 18%, #1B2A4A 0%, #0E1730 55%, #060A18 100%);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    overflow:hidden;
-    /* padding lateral menor pra não cortar em telas estreitas */
-    padding:20px 16px;
-    transition:opacity .7s ease;
-  }
-  .intro-screen.fade-out{opacity:0;pointer-events:none;}
-  .intro-screen.gone{display:none;}
-
-  .stars-field{position:absolute;inset:0;pointer-events:none;}
-  .star{
-    position:absolute;border-radius:50%;
-    background:#fff;
-    animation:twinkle 2.6s ease-in-out infinite;
-  }
-  @keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:1;}}
-
-  .shooting-star{
-    position:absolute;width:2px;height:2px;border-radius:50%;
-    background:#fff;
-    box-shadow:0 0 6px 1px #fff;
-    opacity:0;
-    animation:shoot 3.4s linear infinite;
-    pointer-events:none;
-  }
-  .shooting-star::before{
-    content:'';
-    position:absolute;top:50%;right:0;
-    width:90px;height:1px;
-    background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0));
-    transform:translateY(-50%);
-  }
-  .shooting-star.s1{ top:8%; left:20%; animation-delay:.3s; }
-  .shooting-star.s2{ top:14%; left:70%; animation-delay:1.6s; animation-duration:2.8s; }
-  .shooting-star.s3{ top:30%; left:45%; animation-delay:2.9s; animation-duration:4s; }
-  @keyframes shoot{
-    0%{ transform:translate(0,0) rotate(-45deg); opacity:0; }
-    6%{ opacity:1; }
-    75%{ opacity:1; }
-    100%{ transform:translate(-300px,300px) rotate(-45deg); opacity:0; }
-  }
-
-  /* mapa rolado — tamanho controlado pra caber na tela + deixar espaço pro texto */
-  .scroll-map{
-    position:relative;
-    /* largura máxima menor pra não engolir a tela */
-    width:62%;max-width:240px;
-    height:0;padding-bottom:48%;
-    /* margem inferior menor pra deixar espaço pro texto */
-    margin:0 auto 20px;
     z-index:2;
-    /* evita overflow vertical */
-    flex-shrink:0;
+    width:100%;
+    max-width: 560px;
   }
-  .map-paper{
-    position:absolute;inset:0;
-    background:
-      radial-gradient(circle at 28% 22%, rgba(255,255,255,0.22), transparent 55%),
-      linear-gradient(160deg, #E7C277 0%, #C9974C 55%, #A9742A 100%);
-    border-radius:10px;
-    box-shadow:0 16px 36px rgba(0,0,0,0.55);
-    clip-path:inset(50% 0% 50% 0%);
-    animation:unroll 1.7s ease-out forwards;
-    animation-delay:.35s;
+
+  /* ======= ENVELOPE ======= */
+  #envelope-screen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap: 18px;
+    animation: appear .8s ease both;
   }
-  .map-paper::before{
-    content:'';
-    position:absolute;inset:13px;
-    border:2px dashed rgba(122,75,32,0.55);
-    border-radius:8px;
+
+  .envelope{
+    width: 220px;
+    height: 150px;
+    position:relative;
+    cursor:pointer;
+    margin: 10px auto 6px;
+    filter: drop-shadow(0 14px 22px var(--shadow));
+    transition: transform .35s ease;
   }
-  .map-paper .compass-ico{
-    position:absolute;right:14px;bottom:10px;font-size:24px;opacity:.85;
+  .envelope:hover{ transform: translateY(-4px) scale(1.02); }
+  .envelope:active{ transform: translateY(0) scale(0.98); }
+
+  .env-body{
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, #fff 0%, var(--paper-2) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(62,42,44,0.12);
   }
-  .map-paper .x-ico{
-    position:absolute;left:50%;top:48%;
-    transform:translate(-50%,-50%);
-    font-family:'Baloo 2', sans-serif;
-    font-size:30px;font-weight:700;color:#7A2A1E;
-    opacity:.8;
-  }
-  @keyframes unroll{
-    0%{ clip-path:inset(50% 0% 50% 0%); }
-    100%{ clip-path:inset(0% 0% 0% 0%); }
-  }
-  .rod{
-    position:absolute;left:-7%;right:-7%;height:13px;
-    background:linear-gradient(180deg,#9a6a3e,#5c3a1d);
-    border-radius:8px;box-shadow:0 3px 7px rgba(0,0,0,0.45);
+  .env-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height: 78px;
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 68%);
+    border-radius: 8px 8px 0 0;
+    transform-origin: top center;
+    transition: transform .55s cubic-bezier(.68,-0.25,.27,1.35);
     z-index:3;
-    top:50%;transform:translateY(-50%);
-    animation-duration:1.7s;
-    animation-timing-function:ease-out;
-    animation-fill-mode:forwards;
-    animation-delay:.35s;
   }
-  .rod-top{ animation-name:rodUp; }
-  .rod-bottom{ animation-name:rodDown; }
-  @keyframes rodUp{ 0%{ top:50%; } 100%{ top:0%; } }
-  @keyframes rodDown{ 0%{ top:50%; } 100%{ top:100%; } }
+  .envelope.open .env-flap{ transform: rotateX(180deg); }
+  .env-seal{
+    position:absolute;
+    top: 46%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 40px; height:40px;
+    background: radial-gradient(circle at 35% 30%, #e56a89, var(--rose-deep));
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:18px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+    z-index:4;
+    transition: opacity .3s ease .1s;
+  }
+  .envelope.open .env-seal{ opacity:0; }
 
-  /* texto da intro — centralizado e visível */
-  .intro-texts{
-    display:flex;flex-direction:column;align-items:center;
-    gap:2px;
-    z-index:2;
-    flex-shrink:0;
-    width:100%;
+  .eyebrow{
+    font-family:'Caveat', cursive;
+    font-size: 24px;
+    color: var(--rose-deep);
+    letter-spacing: .5px;
   }
-
-  .intro-line{
-    text-align:center;margin:0 auto 4px;
-    /* overflow protect */
-    width:100%;
-    max-width:400px;
-    word-break:break-word;
-  }
-  .intro-line .word{
-    display:inline-block;opacity:0;transform:translateY(16px);
-    animation:wordUp .6s ease forwards;
-  }
-  @keyframes wordUp{ to{ opacity:1; transform:translateY(0); } }
-  .line-date, .line-where{
-    font-family:'Baloo 2', sans-serif;
+  h1.intro-title{
+    font-family:'Playfair Display', serif;
     font-weight:700;
-    /* tamanho reduzido pra caber bem em celular */
-    font-size:clamp(17px,5vw,28px);
-    color:#F4D9A0;
-    letter-spacing:.04em;
+    font-size: clamp(26px, 6vw, 34px);
+    margin: 0;
     line-height:1.25;
   }
-  .line-date{
-    color:#FFE9C2;
-    font-size:clamp(15px,4.5vw,24px);
-    margin-top:2px;
-  }
-  .line-pretty{
-    font-family:'Quicksand', sans-serif;
-    font-style:italic;font-weight:600;
-    font-size:clamp(13px,3.8vw,17px);
-    /* CORAÇÃO BRANCO */
-    color:#FFD3DE;
-    margin-top:10px;
-    line-height:1.4;
-    padding:0 8px;
-    text-align:center;
+  .hint{
+    font-size: 14px;
+    color: rgba(62,42,44,0.6);
   }
 
-  .intro-continue{
-    margin-top:24px;opacity:0;
-    transition:opacity .6s ease;
-    flex-shrink:0;
-    z-index:2;
-  }
-  .intro-continue.show{opacity:1;}
-
-  .line-buenos{
-    font-family:'Quicksand', sans-serif;
-    font-weight:600;
-    font-size:clamp(12px,3.4vw,15px);
-    color:#b8e0ff;
-    margin-top:8px;
-    line-height:1.4;
-    padding:0 8px;
-    text-align:center;
-    font-style:italic;
-    opacity:.9;
-  }
-
-  /* ---------- love wall após vídeo ---------- */
-  .love-wall{
-    margin-top:18px;
-    padding:14px 10px 10px;
-    border-top:1px dashed var(--gold);
+  /* ======= QUESTION CARD ======= */
+  #question-screen{
+    display:none;
     text-align:center;
   }
-  .love-wall .astro{
-    font-size:52px;
+  #question-screen.active{
     display:block;
-    animation:astroFloat 3s ease-in-out infinite;
-    margin-bottom:6px;
+    animation: appear .6s ease both;
   }
-  @keyframes astroFloat{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-8px); }
+
+  @keyframes appear{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
   }
-  .love-wall-title{
-    font-family:'Baloo 2', sans-serif;
-    font-size:15px;font-weight:700;
-    color:#C0512F;
-    margin-bottom:10px;
-  }
-  .love-ticker-wrap{
-    overflow:hidden;
-    width:100%;
-    height:36px;
+
+  .card{
+    background: #fff;
+    border-radius: 22px;
+    padding: 40px 30px 34px;
+    box-shadow: 0 20px 45px var(--shadow), 0 2px 0 var(--pink-soft) inset;
     position:relative;
+    border: 1px solid rgba(62,42,44,0.06);
   }
-  .love-ticker{
+  .card::before{
+    content:"";
     position:absolute;
-    white-space:nowrap;
+    top:-10px; left:50%;
+    transform: translateX(-50%);
+    width: 54px; height: 20px;
+    background: var(--gold);
+    opacity:.35;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .doodle-row{
+    font-size: 26px;
+    margin-bottom: 6px;
+    letter-spacing: 6px;
+  }
+
+  h2.question{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size: clamp(28px, 7vw, 40px);
+    margin: 4px 0 6px;
+    color: var(--ink);
+  }
+  .question-sub{
+    font-family:'Caveat', cursive;
+    font-size: 22px;
+    color: var(--rose-deep);
+    margin-bottom: 26px;
+  }
+
+  .btn-zone{
+    position:relative;
+    min-height: 190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .btn{
+    border:none;
+    border-radius: 999px;
     font-family:'Quicksand', sans-serif;
     font-weight:700;
-    font-size:17px;
-    color:var(--gold-dark);
-    top:50%;transform:translateY(-50%);
-    /* JS controlará a animação */
-  }
-  .love-ticker span.lang-label{
-    font-size:10px;
-    font-weight:600;
-    color:var(--gold-dark);
-    opacity:.6;
-    vertical-align:super;
-    margin-left:2px;
+    font-size: 18px;
+    padding: 16px 34px;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    user-select:none;
+    -webkit-user-select:none;
   }
 
-  /* ---------- verso de Cânticos no modal do tesouro ---------- */
-  .canticos-verse{
-    background:linear-gradient(135deg,#fff8ea,#fef0d4);
-    border:1.5px solid var(--gold);
-    border-radius:16px;
-    padding:16px 18px 14px;
-    margin:10px 0 16px;
-    position:relative;
+  .btn-yes{
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+    color:#fff;
+    box-shadow: 0 10px 22px rgba(201,24,74,0.35);
   }
-  .canticos-verse::before{
-    content:'"';
-    position:absolute;top:-14px;left:14px;
-    font-family:'Baloo 2',sans-serif;
-    font-size:52px;color:var(--gold);
-    opacity:.35;line-height:1;
-  }
-  .canticos-icon{font-size:22px;display:block;margin-bottom:6px;}
-  .canticos-text{
-    font-family:'Baloo 2',sans-serif;
-    font-size:17px;font-weight:600;
-    color:#7A3E1A;
-    line-height:1.55;
-    margin:0 0 4px;
-    font-style:italic;
-  }
-  .canticos-ref{
-    font-size:12px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--gold-dark);
-    margin:0 0 10px;opacity:.85;
-  }
-  .canticos-sub{
-    font-size:14px;color:var(--ink);line-height:1.5;
-    margin:0;opacity:.85;
+  .btn-yes:hover{ transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 26px rgba(201,24,74,0.42); }
+  .btn-yes:active{ transform: translateY(0) scale(0.97); }
+
+  .btn-no{
+    position:absolute;
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid rgba(62,42,44,0.18);
+    box-shadow: 0 6px 14px rgba(62,42,44,0.12);
+    transition: transform .18s ease, left .22s cubic-bezier(.3,1.4,.5,1), top .22s cubic-bezier(.3,1.4,.5,1);
+    white-space: nowrap;
   }
 
-  /* texto das pistas com quebra de linha (verso bíblico) */
-  #clueText{
-    white-space:pre-line;
-    font-size:15.5px;
-    line-height:1.65;
+  .taunt{
+    font-family:'Caveat', cursive;
+    font-size: 20px;
+    color: var(--rose-deep);
+    min-height: 28px;
+    margin-top: 4px;
+    opacity:0;
+    transition: opacity .25s ease;
   }
-  #clueText .verse-block{
+  .taunt.show{ opacity:1; }
+
+  .joke-note{
+    font-size: 13px;
+    color: rgba(62,42,44,0.5);
+    margin-top: 18px;
+  }
+
+  /* ======= RESULT SCREEN ======= */
+  #result-screen{ display:none; text-align:center; }
+  #result-screen.active{ display:block; animation: appear .5s ease both; }
+
+  .result-msg{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size: clamp(24px, 6vw, 32px);
+    margin: 4px 0 10px;
+  }
+  .result-sub{
+    font-family:'Caveat', cursive;
+    font-size: 22px;
+    color: var(--rose-deep);
+    margin-bottom: 6px;
+  }
+
+  .sticker-wrap{
+    margin: 26px auto 10px;
+    width: 190px;
+    height: 190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    transform: scale(0) rotate(-25deg);
+  }
+  .sticker-wrap.pop{
+    animation: sticker-pop .7s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes sticker-pop{
+    0%{ opacity:0; transform: scale(0) rotate(-35deg); }
+    60%{ opacity:1; transform: scale(1.15) rotate(8deg); }
+    80%{ transform: scale(0.94) rotate(-4deg); }
+    100%{ opacity:1; transform: scale(1) rotate(-6deg); }
+  }
+  .sticker-wrap img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    filter: drop-shadow(0 10px 16px rgba(62,42,44,0.28));
+  }
+  .sticker-caption{
+    font-family:'Caveat', cursive;
+    font-size: 20px;
+    color: var(--sage);
+    margin-top: -4px;
+    opacity:0;
+    transition: opacity .4s ease .3s;
+  }
+  .sticker-caption.show{ opacity:1; }
+
+  .cert-btn{
+    margin-top: 22px;
+    background: var(--gold);
+    color:#fff;
+    display:none;
+  }
+  .cert-btn.show{ display:inline-block; animation: appear .5s ease both; }
+  .cert-btn:hover{ transform: translateY(-3px) scale(1.04); }
+
+  .cert-wrap{
+    margin-top: 26px;
+    display:none;
+  }
+  .cert-wrap.show{ display:block; animation: appear .6s ease both; }
+  .cert-frame{
+    background:#fff;
+    padding: 14px 14px 26px;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px var(--shadow);
+    display:inline-block;
+    transform: rotate(-1.5deg);
+    max-width: 100%;
+  }
+  .cert-frame img{
+    max-width: 100%;
+    border-radius: 6px;
     display:block;
-    margin-top:14px;
-    padding-top:12px;
-    border-top:1px dashed var(--gold);
-    font-style:italic;
-    color:#7A3E1A;
-    font-size:14px;
-    line-height:1.6;
+  }
+  .cert-frame span{
+    display:block;
+    font-family:'Caveat', cursive;
+    font-size: 20px;
+    color: var(--rose-deep);
+    margin-top: 8px;
+  }
+
+  .confetti{
+    position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden;
+  }
+  .confetti i{
+    position:absolute;
+    top:-5%;
+    font-size: 20px;
+    animation: confetti-fall 2.6s ease-in forwards;
+  }
+  @keyframes confetti-fall{
+    to{ transform: translateY(105vh) rotate(360deg); opacity:0.2; }
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 26px;
+    font-family:'Caveat', cursive;
+    font-size: 16px;
+    color: rgba(62,42,44,0.45);
+  }
+
+  @media (max-width:480px){
+    .card{ padding: 30px 18px 26px; }
+    .btn{ padding:14px 26px; font-size:16px; }
+    .btn-zone{ min-height: 220px; }
   }
 
   @media (prefers-reduced-motion: reduce){
-    .star{animation:none;opacity:.6;}
-    .shooting-star{display:none;}
-    .map-paper, .rod-top, .rod-bottom{animation:none;clip-path:none;top:0%;}
-    .rod-bottom{top:100%;}
-    .intro-line .word{animation:none;opacity:1;transform:none;}
-    .love-wall .astro{animation:none;}
-  }
-
-  /* telas muito pequenas: reduz o mapa ainda mais */
-  @media (max-height: 600px){
-    .scroll-map{
-      width:44%;padding-bottom:34%;margin-bottom:12px;
-    }
-    .intro-continue{margin-top:14px;}
+    *{ animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   }
 </style>
 </head>
 <body>
 
-  <div class="intro-screen" id="introScreen">
-    <div class="stars-field" id="starsField"></div>
-    <div class="shooting-star s1"></div>
-    <div class="shooting-star s2"></div>
-    <div class="shooting-star s3"></div>
+<div class="bg-hearts" id="bgHearts"></div>
 
-    <div class="scroll-map">
-      <div class="rod rod-top"></div>
-      <div class="map-paper">
-        <span class="x-ico">X</span>
-        <span class="compass-ico">🧭</span>
-      </div>
-      <div class="rod rod-bottom"></div>
+<div class="stage">
+
+  <!-- TELA 1: ENVELOPE -->
+  <div id="envelope-screen">
+    <p class="eyebrow">tem uma cartinha pra você</p>
+    <div class="envelope" id="envelope" role="button" aria-label="Abrir carta" tabindex="0">
+      <div class="env-flap"></div>
+      <div class="env-body"></div>
+      <div class="env-seal">♥</div>
     </div>
-
-    <div class="intro-texts">
-      <div class="intro-line line-where" id="introLine1"></div>
-      <div class="intro-line line-date" id="introLine2"></div>
-      <div class="intro-line line-pretty" id="introLine3"></div>
-      <div class="intro-line line-buenos" id="introLine4"></div>
-    </div>
-
-    <button class="btn intro-continue" id="introContinue">Continuar ✨</button>
+    <h1 class="intro-title">Abre aí, é rapidinho 💌</h1>
+    <p class="hint">(toque ou clique no envelope)</p>
   </div>
 
-  <div class="header">
-    <div class="eyebrow">uma caça ao tesouro só nossa</div>
-    <h1>1 Mês de Nós 🤍</h1>
-    <p>Amizade e namoro nascendo juntos, no mesmo capítulo 🥰 Encontre as 6 pistas escondidas no mapa e descubra o que está esperando por você no final.</p>
-  </div>
+  <!-- TELA 2: PERGUNTA -->
+  <div id="question-screen">
+    <div class="card">
+      <div class="doodle-row">✦ ⋆ ˚｡⋆ ♡ ⋆｡˚ ⋆ ✦</div>
+      <h2 class="question">Você quer casar comigo?</h2>
+      <p class="question-sub">é sério, mas também não kkkk</p>
 
-  <div class="progress-wrap" id="dotsWrap"></div>
-  <div class="progress-text" id="progressText">0 de 6 pistas encontradas</div>
-
-  <div class="scene-wrap">
-    <div class="scene-frame">
-      <div class="scene" id="scene">
-        <div class="layer-sky"></div>
-        <div class="layer-sea"></div>
-        <div class="layer-sand"></div>
-
-        <div class="deco cloud" style="left:18%; top:8%;">☁️</div>
-        <div class="deco cloud" style="left:72%; top:5%;">☁️</div>
-        <div class="deco" style="left:85%; top:10%;">☀️</div>
-        <div class="deco" style="left:14%; top:34%;">🌴</div>
-        <div class="deco small" style="left:88%; top:40%;">🐦</div>
-        <div class="deco small" style="left:8%; top:88%;">🌊</div>
-        <div class="deco small" style="left:92%; top:92%;">🌊</div>
-        <div class="deco small" style="left:50%; top:18%;">🙈</div>
-        <div class="deco small" style="left:62%; top:46%;">🤭</div>
-        <div class="deco small" style="left:38%; top:68%;">🥰</div>
-
-        <div id="cluesLayer"></div>
-
-        <button class="chest-btn" id="chestBtn">
-          <span>🎁</span><span class="lock">🔒</span>
-        </button>
-
-        <div class="torch-hint" id="torchHint">👆 desliza o dedo pra iluminar o caminho</div>
-        <div class="torch" id="torch"></div>
-      </div>
-    </div>
-    <div class="chest-hint" id="chestHint"></div>
-    <button class="torch-toggle" id="reopenTorch">🔋 Aumentar a luz</button>
-  </div>
-
-  <!-- overlays -->
-  <div class="overlay" id="overlayIntro">
-    <div class="card" id="card-intro">
-      <span class="icon-big">🔦</span>
-      <h2>Apaguei as luzes de propósito 😏</h2>
-      <p>Tá tudo no escuro por aqui. Usa o dedo pra iluminar o caminho e encontrar as <b>6 pistas</b> escondidas. Só que a luz tá bem fraquinha... quer aumentar?</p>
-      <button class="btn" id="startBtn">Vamos lá</button>
-    </div>
-  </div>
-
-  <div class="overlay" id="overlayTorch">
-    <div class="card" id="card-torch">
-      <span class="icon-big">🔋</span>
-      <h2>Aumentar a Luz</h2>
-      <p>Toca em <b>começar</b> e depois em <b>PARAR</b> bem nos <b>3.00 segundos</b> pra deixar a lanterna mais forte.</p>
-      <div class="torch-attempts" id="torchAttemptsText">Tentativa 1</div>
-      <div class="stopwatch" id="stopwatchDisplay">0.00s</div>
-      <button class="btn" id="stopwatchBtn">Começar</button>
-      <div class="torch-result" id="torchResult"></div>
-    </div>
-  </div>
-
-  <div class="overlay" id="overlayClue">
-    <div class="card" id="card-clue">
-      <button class="close" id="closeClue">✕</button>
-      <span class="icon-big" id="clueIcon">🐚</span>
-      <h2 id="clueTitle">Título</h2>
-      <p id="clueText">Texto</p>
-    </div>
-  </div>
-
-  <div class="overlay" id="overlayTreasure">
-    <div class="card" id="card-treasure">
-      <button class="close" id="closeTreasure">✕</button>
-      <span class="icon-big">🎁</span>
-      <h2>Feliz 1 Mês 🤍</h2>
-
-      <!-- elogio bíblico de Cânticos -->
-      <div class="canticos-verse">
-        <span class="canticos-icon">🕊️</span>
-        <p class="canticos-text">"Toda formosa és tu, amada minha,<br>e não há em ti defeito algum."</p>
-        <p class="canticos-ref">Cânticos 4:7</p>
-        <p class="canticos-sub">Quando li isso pela primeira vez, pensei em você. Não é coincidência — é Deus confirmando o que eu já sentia. 🙈🤍</p>
+      <div class="btn-zone" id="btnZone">
+        <button class="btn btn-yes" id="btnYes">Sim, quero! 💍</button>
+        <button class="btn btn-no" id="btnNo">Não</button>
       </div>
 
-      <p>Gravei isso porque tem coisa que palavra escrita não entrega do mesmo jeito.</p>
-      <div class="video-frame" id="videoFrame">
-        <div class="video-inner" id="videoInner"></div>
-      </div>
-      <p style="margin-top:10px; font-size:14.5px; opacity:.8;">Sou grato por te conhecer 🙈♡</p>
+      <p class="taunt" id="taunt"></p>
+      <p class="joke-note">relaxa, o botão "não" só existe de decoração kskskse</p>
+    </div>
+  </div>
 
-      <!-- love wall: aparece após o vídeo ser clicado -->
-      <div class="love-wall" id="loveWall" style="display:none;">
-        <span class="astro">🧑‍🚀</span>
-        <div class="love-wall-title">eu te amo, Sthefany 🤍</div>
-        <div class="love-ticker-wrap">
-          <div class="love-ticker" id="loveTicker"></div>
+  <!-- TELA 3: RESULTADO -->
+  <div id="result-screen">
+    <div class="card">
+      <p class="result-msg" id="resultMsg">Prontinho, estamos casados! 💍🤭</p>
+      <p class="result-sub" id="resultSub">agora não tem mais volta... HAAHAHAHAHAHAHAAH 🙈</p>
+
+      <div class="sticker-wrap" id="stickerWrap">
+        <img src="dog.PNG" alt="figurinha comemorando" id="dogSticker">
+      </div>
+      <p class="sticker-caption" id="stickerCaption">até o cachorro tá feliz por nós 🐶💕</p>
+
+      <button class="btn cert-btn" id="certBtn">Ver nosso certificado 📜</button>
+
+      <div class="cert-wrap" id="certWrap">
+        <div class="cert-frame">
+          <img src="certificado.jpeg" alt="certificado de casamento">
+          <span>oficial, com carimbo e tudo ✍️</span>
         </div>
       </div>
     </div>
   </div>
 
+  <footer>feito com ♡ (e um pouco de zoeira)</footer>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
 <script>
-/* =====================================================================
-   VÍDEO HOSPEDADO NO GITHUB
-   Se o arquivo "onemonth.mp4" estiver na MESMA PASTA deste .html dentro
-   do repositório (e você estiver usando GitHub Pages), o caminho
-   relativo abaixo já funciona sozinho — não precisa mudar nada.
-
-   Se o vídeo estiver dentro de uma subpasta, ajuste o caminho, ex.:
-   "videos/onemonth.mp4"
-
-   Se NÃO estiver usando GitHub Pages (só o repositório "cru"), troque
-   por uma URL "raw", tipo:
-   "https://raw.githubusercontent.com/SEU-USUARIO/SEU-REPO/main/onemonth.mp4"
-===================================================================== */
-const VIDEO_URL = "onemonth.mp4";
-/* ===================================================================== */
-
-const clues = [
-  {
-    id:1, x:20, y:33, icon:'🐚', title:'A Concha',
-    text:'Há um mês, uma conversa qualquer virou o início de tudo isso. Quem diria que ia dar nisso aqui 🥰\n\n✦ Cânticos 1:15 — "Eis que és formosa, amada minha; eis que és formosa, os teus olhos são como os de pomba."'
-  },
-  {
-    id:2, x:78, y:25, icon:'⚓', title:'A Âncora',
-    text:'Antes de ser namoro, já era parceria. Essa é a nossa âncora — não importa o resto, ela nos mantém firmes.\n\n✦ Cânticos 2:4 — "Ele me introduziu na casa do banquete, e o seu estandarte sobre mim era o amor."'
-  },
-  {
-    id:3, x:30, y:52, icon:'🦀', title:'O Caranguejo',
-    text:'Tem coisa que só a gente entende: as piadas bobas, os memes, esse nosso jeito de ser engraçado sem nem tentar 🤭\n\n✦ Cânticos 2:3 — "Qual a macieira entre as árvores do bosque, tal é o meu amado entre os filhos. À sua sombra me deleito e me assento, e o seu fruto é doce ao meu paladar."'
-  },
-  {
-    id:4, x:70, y:58, icon:'🧭', title:'A Bússola',
-    text:'Não sei exatamente pra onde isso vai dar. Só sei que quero descobrir esse caminho do seu lado.\n\n✦ Cânticos 6:3 — "Eu sou do meu amado, e o meu amado é meu." — é isso que quero poder dizer um dia 🙈'
-  },
-  {
-    id:5, x:22, y:78, icon:'🪙', title:'A Moeda',
-    text:'Trinta dias, e já perdi a conta de quantas vezes agradeci a Deus por você ter entrado na minha vida 🙈\n\n✦ Cânticos 4:7 — "Toda formosa és tu, amada minha, e não há em ti defeito algum." — e isso não é poesia, é verdade mesmo.'
-  },
-  {
-    id:6, x:80, y:80, icon:'🗝️', title:'A Chave',
-    text:'Essa é a chave. Vai lá abrir o tesouro — tem uma coisa esperando por você. ✨\n\n✦ Cânticos 8:7 — "As muitas águas não podem apagar o amor, nem os rios o podem submergir." — guarda isso no coração. 🤍',
-    isKey:true
+  // ---------- corações de fundo ----------
+  const bgHearts = document.getElementById('bgHearts');
+  const heartChars = ['♥','♡','💕'];
+  for(let i=0;i<16;i++){
+    const s = document.createElement('span');
+    s.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+    s.style.left = Math.random()*100 + '%';
+    s.style.fontSize = (14 + Math.random()*18) + 'px';
+    s.style.animationDuration = (10 + Math.random()*12) + 's';
+    s.style.animationDelay = (Math.random()*10) + 's';
+    bgHearts.appendChild(s);
   }
-];
 
-let foundCount = 0;
-const total = clues.length;
+  // ---------- envelope -> pergunta ----------
+  const envelope = document.getElementById('envelope');
+  const envelopeScreen = document.getElementById('envelope-screen');
+  const questionScreen = document.getElementById('question-screen');
 
-const dotsWrap = document.getElementById('dotsWrap');
-clues.forEach((_, i)=>{
-  const d = document.createElement('div');
-  d.className = 'dot';
-  d.id = 'dot-' + i;
-  dotsWrap.appendChild(d);
-});
+  function openEnvelope(){
+    if(envelope.classList.contains('open')) return;
+    envelope.classList.add('open');
+    setTimeout(()=>{
+      envelopeScreen.style.display = 'none';
+      questionScreen.classList.add('active');
+    }, 550);
+  }
+  envelope.addEventListener('click', openEnvelope);
+  envelope.addEventListener('keypress', (e)=>{ if(e.key==='Enter') openEnvelope(); });
 
-const cluesLayer = document.getElementById('cluesLayer');
-clues.forEach(c=>{
-  const btn = document.createElement('button');
-  btn.className = 'clue';
-  btn.style.left = c.x + '%';
-  btn.style.top = c.y + '%';
-  btn.id = 'clue-' + c.id;
-  btn.textContent = c.icon;
-  btn.addEventListener('click', ()=> openClue(c));
-  cluesLayer.appendChild(btn);
-});
+  // ---------- botão "não" fujão ----------
+  const btnZone = document.getElementById('btnZone');
+  const btnNo = document.getElementById('btnNo');
+  const btnYes = document.getElementById('btnYes');
+  const taunt = document.getElementById('taunt');
 
-const overlayClue = document.getElementById('overlayClue');
-const overlayIntro = document.getElementById('overlayIntro');
-const overlayTreasure = document.getElementById('overlayTreasure');
-const overlayTorch = document.getElementById('overlayTorch');
-const chestBtn = document.getElementById('chestBtn');
-const chestHint = document.getElementById('chestHint');
-const progressText = document.getElementById('progressText');
+  const taunts = [
+    "hshshs quase! 🔪😂",
+    "ele foge, ele sempre vai fugir kskskse",
+    "esse botão é ilusão 🔪😹",
+    "nem adianta correr atrás 😂",
+    "só o sim existe de verdade aqui kkkk",
+    "brincadeira... ou não? 🔪😂 kskskse"
+  ];
+  let tauntIndex = 0;
+  let yesScale = 1;
 
-function openClue(c){
-  const node = document.getElementById('clue-' + c.id);
-  if(!node.classList.contains('found')){
-    node.classList.add('found');
-    foundCount++;
-    document.getElementById('dot-' + (foundCount-1)).classList.add('found');
-    progressText.textContent = foundCount + ' de ' + total + ' pistas encontradas';
-    if(foundCount === total){
-      chestBtn.classList.add('ready');
-      chestHint.textContent = 'O tesouro está liberado. Toque nele! ✨';
+  function dodge(){
+    const zoneRect = btnZone.getBoundingClientRect();
+    const btnRect = btnNo.getBoundingClientRect();
+
+    const maxLeft = Math.max(zoneRect.width - btnRect.width, 0);
+    const maxTop = Math.max(zoneRect.height - btnRect.height, 0);
+
+    const newLeft = Math.random() * maxLeft;
+    const newTop = Math.random() * maxTop;
+
+    btnNo.style.position = 'absolute';
+    btnNo.style.left = newLeft + 'px';
+    btnNo.style.top = newTop + 'px';
+
+    taunt.textContent = taunts[tauntIndex % taunts.length];
+    tauntIndex++;
+    taunt.classList.add('show');
+    clearTimeout(dodge._t);
+    dodge._t = setTimeout(()=> taunt.classList.remove('show'), 1800);
+
+    // botão sim cresce um pouquinho a cada fuga, até um limite
+    yesScale = Math.min(yesScale + 0.035, 1.35);
+    btnYes.style.transform = `scale(${yesScale})`;
+  }
+
+  // posição inicial do botão não (relativa)
+  function placeInitialNo(){
+    btnNo.style.position = 'absolute';
+    const zoneRect = btnZone.getBoundingClientRect();
+    const btnRect = btnNo.getBoundingClientRect();
+    btnNo.style.left = ((zoneRect.width - btnRect.width)/2) + 'px';
+    btnNo.style.top = (zoneRect.height/2 + 10) + 'px';
+  }
+  window.addEventListener('load', ()=> setTimeout(placeInitialNo, 50));
+
+  // dispara em hover (mouse) e toque (mobile), sempre antes do click "pegar"
+  ['mouseenter','touchstart','pointerdown'].forEach(evt=>{
+    btnNo.addEventListener(evt, function(e){
+      e.preventDefault();
+      dodge();
+    }, {passive:false});
+  });
+
+  // fallback: se por algum milagre o clique acontecer, ainda assim é brincadeira
+  btnNo.addEventListener('click', function(e){
+    e.preventDefault();
+    dodge();
+  });
+
+  // ---------- confete ----------
+  function launchConfetti(){
+    const box = document.getElementById('confetti');
+    const emojis = ['💍','💕','🎉','✨','♡','🥳'];
+    for(let i=0;i<40;i++){
+      const el = document.createElement('i');
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = Math.random()*100 + '%';
+      el.style.fontSize = (16 + Math.random()*16) + 'px';
+      el.style.animationDelay = (Math.random()*0.6) + 's';
+      el.style.animationDuration = (2 + Math.random()*1.4) + 's';
+      box.appendChild(el);
+      setTimeout(()=> el.remove(), 4000);
     }
   }
-  document.getElementById('clueIcon').textContent = c.icon;
-  document.getElementById('clueTitle').textContent = c.title;
 
-  // separa o texto principal do verso bíblico (marcado com ✦)
-  const parts = c.text.split('\n\n✦ ');
-  const mainText = parts[0];
-  const verseText = parts[1] ? '✦ ' + parts[1] : null;
+  // ---------- clicar em SIM ----------
+  const resultScreen = document.getElementById('result-screen');
+  const stickerWrap = document.getElementById('stickerWrap');
+  const stickerCaption = document.getElementById('stickerCaption');
+  const certBtn = document.getElementById('certBtn');
+  const certWrap = document.getElementById('certWrap');
 
-  const clueTextEl = document.getElementById('clueText');
-  clueTextEl.innerHTML = '';
-
-  const mainSpan = document.createElement('span');
-  mainSpan.textContent = mainText;
-  clueTextEl.appendChild(mainSpan);
-
-  if(verseText){
-    const verseEl = document.createElement('span');
-    verseEl.className = 'verse-block';
-    verseEl.textContent = verseText;
-    clueTextEl.appendChild(verseEl);
-  }
-
-  overlayClue.classList.add('active');
-}
-
-document.getElementById('closeClue').addEventListener('click', ()=> overlayClue.classList.remove('active'));
-overlayClue.addEventListener('click', (e)=>{ if(e.target===overlayClue) overlayClue.classList.remove('active'); });
-
-document.getElementById('startBtn').addEventListener('click', ()=>{
-  overlayIntro.classList.remove('active');
-  overlayTorch.classList.add('active');
-});
-
-document.getElementById('reopenTorch').addEventListener('click', ()=> overlayTorch.classList.add('active'));
-overlayTorch.addEventListener('click', (e)=>{ if(e.target===overlayTorch) overlayTorch.classList.remove('active'); });
-
-chestBtn.addEventListener('click', ()=>{
-  if(foundCount < total){
-    chestHint.textContent = 'Ainda faltam pistas... (' + foundCount + '/' + total + ')';
-    chestBtn.classList.add('shake');
-    setTimeout(()=> chestBtn.classList.remove('shake'), 400);
-    return;
-  }
-  buildVideoEmbed();
-  overlayTreasure.classList.add('active');
-});
-
-document.getElementById('closeTreasure').addEventListener('click', ()=> overlayTreasure.classList.remove('active'));
-overlayTreasure.addEventListener('click', (e)=>{ if(e.target===overlayTreasure) overlayTreasure.classList.remove('active'); });
-
-/* ---------- lanterna: segue o dedo / mouse ---------- */
-const sceneFrame = document.querySelector('.scene-frame');
-const torchEl = document.getElementById('torch');
-const torchHint = document.getElementById('torchHint');
-let torchRadius = 60;
-
-function setTorchSize(r){
-  torchRadius = r;
-  torchEl.style.width = (r*2) + 'px';
-  torchEl.style.height = (r*2) + 'px';
-}
-setTorchSize(torchRadius);
-
-function moveTorch(clientX, clientY){
-  const rect = sceneFrame.getBoundingClientRect();
-  const x = clientX - rect.left;
-  const y = clientY - rect.top;
-  torchEl.style.left = x + 'px';
-  torchEl.style.top = y + 'px';
-  if(!torchHint.classList.contains('hidden')){
-    torchHint.classList.add('hidden');
-  }
-}
-
-sceneFrame.addEventListener('pointermove', (e)=>{
-  moveTorch(e.clientX, e.clientY);
-});
-sceneFrame.addEventListener('pointerdown', (e)=>{
-  moveTorch(e.clientX, e.clientY);
-});
-
-/* ---------- desafio do cronômetro ---------- */
-const stopwatchBtn = document.getElementById('stopwatchBtn');
-const stopwatchDisplay = document.getElementById('stopwatchDisplay');
-const torchResult = document.getElementById('torchResult');
-const torchAttemptsText = document.getElementById('torchAttemptsText');
-
-let swRunning = false;
-let swStart = 0;
-let swRaf = null;
-let attempt = 0;
-const TOTAL_ATTEMPTS = 3;
-let lightBoosted = false;
-
-function tickStopwatch(){
-  const elapsed = (performance.now() - swStart) / 1000;
-  stopwatchDisplay.textContent = elapsed.toFixed(2) + 's';
-  swRaf = requestAnimationFrame(tickStopwatch);
-}
-
-stopwatchBtn.addEventListener('click', ()=>{
-  if(lightBoosted && attempt >= TOTAL_ATTEMPTS){
-    overlayTorch.classList.remove('active');
-    return;
-  }
-
-  if(!swRunning){
-    swRunning = true;
-    swStart = performance.now();
-    stopwatchBtn.textContent = 'PARAR';
-    torchResult.textContent = '';
-    swRaf = requestAnimationFrame(tickStopwatch);
-    return;
-  }
-
-  swRunning = false;
-  cancelAnimationFrame(swRaf);
-  attempt++;
-  const realElapsed = (performance.now() - swStart) / 1000;
-
-  if(attempt < TOTAL_ATTEMPTS){
-    stopwatchDisplay.textContent = realElapsed.toFixed(2) + 's';
-    const diff = Math.abs(realElapsed - 3);
-    torchResult.textContent = 'Faltou ' + diff.toFixed(2) + 's pros 3 segundos certinhos. Tenta de novo!';
-    torchAttemptsText.textContent = 'Tentativa ' + (attempt+1);
-    stopwatchBtn.textContent = 'Começar';
-  } else {
-    const fakeWrong = (0.3 + Math.random()*1.3).toFixed(2);
-    stopwatchDisplay.textContent = fakeWrong + 's';
-    torchResult.textContent = 'Ahh, quase isso...';
-    stopwatchBtn.textContent = 'Começar';
-    stopwatchBtn.disabled = true;
+  btnYes.addEventListener('click', function(){
+    launchConfetti();
+    questionScreen.classList.remove('active');
+    resultScreen.classList.add('active');
 
     setTimeout(()=>{
-      /* ── CORRIGIDO: ksksk no lugar de kkkkk ── */
-      torchResult.innerHTML = 'Ixi... 🤭 <b>TA DE HACK</b> ksksk';
-      setTimeout(()=>{
-        lightBoosted = true;
-        setTorchSize(170);
-        torchResult.innerHTML += '<br>Mentira, a luz aumenta de qualquer jeito ✨<br>Agora dá pra ver melhor pra achar o tesouro.';
-        stopwatchBtn.textContent = 'Fechar';
-        stopwatchBtn.disabled = false;
-      }, 1400);
-    }, 1100);
-  }
-});
+      stickerWrap.classList.add('pop');
+    }, 350);
 
-function buildVideoEmbed(){
-  const inner = document.getElementById('videoInner');
-  const frame = document.getElementById('videoFrame');
-  if(!VIDEO_URL){
-    frame.classList.remove('wide');
-    inner.innerHTML = '<div class="video-placeholder"><span class="e">🎬</span><p>Cole a URL do vídeo na variável <code>VIDEO_URL</code><br>perto do topo do código.</p></div>';
-    return;
-  }
-  if(/youtube\.com|youtu\.be/.test(VIDEO_URL)){
-    let id = '';
-    const m = VIDEO_URL.match(/(?:v=|\/embed\/|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
-    if(m) id = m[1];
-    frame.classList.add('wide');
-    inner.innerHTML = '<iframe width="100%" height="100%" style="position:absolute;top:0;left:0;" src="https://www.youtube.com/embed/' + id + '" title="video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-  } else if(/vimeo\.com/.test(VIDEO_URL)){
-    const m2 = VIDEO_URL.match(/vimeo\.com\/(\d+)/);
-    const id2 = m2 ? m2[1] : '';
-    frame.classList.add('wide');
-    inner.innerHTML = '<iframe src="https://player.vimeo.com/video/' + id2 + '" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-  } else {
-    frame.classList.remove('wide');
-    inner.innerHTML = '<video controls playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;"><source src="' + VIDEO_URL + '">Seu navegador não suporta vídeo HTML5.</video>';
-  }
-}
+    setTimeout(()=>{
+      stickerCaption.classList.add('show');
+    }, 900);
 
-/* ---------- love wall: "eu te amo" em todas as línguas ---------- */
-const iLoveYou = [
-  { lang:'Português',     text:'Eu te amo' },
-  { lang:'Español',       text:'Te amo' },
-  { lang:'English',       text:'I love you' },
-  { lang:'Français',      text:'Je t\'aime' },
-  { lang:'Italiano',      text:'Ti amo' },
-  { lang:'Deutsch',       text:'Ich liebe dich' },
-  { lang:'日本語',         text:'愛してる' },
-  { lang:'中文',           text:'我爱你' },
-  { lang:'한국어',         text:'사랑해' },
-  { lang:'Русский',       text:'Я тебя люблю' },
-  { lang:'العربية',       text:'أنا أحبك' },
-  { lang:'हिन्दी',        text:'मैं तुमसे प्यार करता हूँ' },
-  { lang:'Swahili',       text:'Nakupenda' },
-  { lang:'Türkçe',        text:'Seni seviyorum' },
-  { lang:'Polski',        text:'Kocham cię' },
-  { lang:'Nederlands',    text:'Ik hou van jou' },
-  { lang:'Svenska',       text:'Jag älskar dig' },
-  { lang:'Norsk',         text:'Jeg elsker deg' },
-  { lang:'Dansk',         text:'Jeg elsker dig' },
-  { lang:'Suomi',         text:'Rakastan sinua' },
-  { lang:'Ελληνικά',      text:'Σε αγαπώ' },
-  { lang:'עברית',         text:'אני אוהב אותך' },
-  { lang:'Українська',    text:'Я тебе кохаю' },
-  { lang:'Čeština',       text:'Miluji tě' },
-  { lang:'Română',        text:'Te iubesc' },
-  { lang:'Magyar',        text:'Szeretlek' },
-  { lang:'Català',        text:'T\'estimo' },
-  { lang:'Galego',        text:'Ámote' },
-  { lang:'Euskara',       text:'Maite zaitut' },
-  { lang:'Tagalog',       text:'Mahal kita' },
-  { lang:'Bahasa',        text:'Aku cinta kamu' },
-  { lang:'Việt',          text:'Anh yêu em' },
-  { lang:'ภาษาไทย',       text:'ฉันรักคุณ' },
-  { lang:'Latviešu',      text:'Es tevi mīlu' },
-  { lang:'Lietuvių',      text:'Aš tave myliu' },
-  { lang:'Eesti',         text:'Ma armastan sind' },
-  { lang:'Slovenčina',    text:'Milujem ťa' },
-  { lang:'Hrvatski',      text:'Volim te' },
-  { lang:'Srpski',        text:'Volim te' },
-  { lang:'Македонски',    text:'Те сакам' },
-  { lang:'Shqip',         text:'Të dua' },
-  { lang:'Georgian',      text:'მიყვარხარ' },
-  { lang:'Armensku',      text:'Ես քեզ սիրում եմ' },
-  { lang:'Azərbaycan',    text:'Mən səni sevirəm' },
-  { lang:'Қазақ',         text:'Мен сені жақсы көремін' },
-  { lang:'فارسی',         text:'دوستت دارم' },
-  { lang:'Монгол',        text:'Би чамд хайртай' },
-  { lang:'Cymraeg',       text:'Rwy\'n dy garu di' },
-  { lang:'Gaeilge',       text:'Tá grá agam duit' },
-  { lang:'Scots Gaelic',  text:'Tha gràdh agam ort' },
-  { lang:'Afrikaans',     text:'Ek is lief vir jou' },
-  { lang:'Zulu',          text:'Ngiyakuthanda' },
-  { lang:'Yoruba',        text:'Mo nifẹ rẹ' },
-  { lang:'Igbo',          text:'A hụrụ m gị n\'anya' },
-  { lang:'Hausa',         text:'Ina son ki' },
-  { lang:'Amharic',       text:'እወድሻለሁ' },
-  { lang:'Somali',        text:'Waan ku jecelahay' },
-  { lang:'Malagasy',      text:'Tiako ianao' },
-  { lang:'Sesotho',       text:'Ke a go rata' },
-  { lang:'Shona',         text:'Ndinokuda' },
-  { lang:'Esperanto',     text:'Mi amas vin' },
-  { lang:'Latin',         text:'Te amo' },
-  { lang:'Sanskrit',      text:'अहं त्वां प्रेमामि' },
-  { lang:'Māori',         text:'Ka aroha ahau ki a koe' },
-  { lang:'Hawaiian',      text:'Aloha wau iā ʻoe' },
-  { lang:'Klingon',       text:'qamuSHa\'' },
-];
-
-let loveTickerRunning = false;
-let loveTickerTimeout = null;
-let loveIndex = 0;
-const tickerEl = document.getElementById('loveTicker');
-
-function buildTickerItem(entry){
-  return `${entry.text} <span class="lang-label">${entry.lang}</span>`;
-}
-
-function runLoveTicker(){
-  if(!loveTickerRunning) return;
-  const entry = iLoveYou[loveIndex % iLoveYou.length];
-  tickerEl.style.transition = 'none';
-  tickerEl.style.opacity = '0';
-  tickerEl.style.transform = 'translateY(-50%) translateX(30px)';
-  tickerEl.innerHTML = buildTickerItem(entry);
-
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      tickerEl.style.transition = 'opacity .35s ease, transform .35s ease';
-      tickerEl.style.opacity = '1';
-      tickerEl.style.transform = 'translateY(-50%) translateX(0)';
-    });
+    setTimeout(()=>{
+      certBtn.classList.add('show');
+    }, 1500);
   });
 
-  loveIndex++;
-  loveTickerTimeout = setTimeout(runLoveTicker, 700);
-}
-
-function startLoveWall(){
-  const wall = document.getElementById('loveWall');
-  if(wall.style.display !== 'none') return; // já iniciado
-  wall.style.display = 'block';
-  loveTickerRunning = true;
-  loveIndex = 0;
-  runLoveTicker();
-}
-
-// inicia o love wall quando o modal do tesouro abre
-const origChestClick = chestBtn.onclick;
-chestBtn.addEventListener('click', ()=>{
-  if(foundCount >= total){
-    setTimeout(startLoveWall, 800);
-  }
-});
-
-// para o ticker ao fechar o modal
-document.getElementById('closeTreasure').addEventListener('click', ()=>{
-  loveTickerRunning = false;
-  clearTimeout(loveTickerTimeout);
-});
-overlayTreasure.addEventListener('click', (e)=>{
-  if(e.target === overlayTreasure){
-    loveTickerRunning = false;
-    clearTimeout(loveTickerTimeout);
-  }
-});
-
-/* ---------- intro cinematográfica ---------- */
-const starsField = document.getElementById('starsField');
-const starCount = 55;
-for(let i=0;i<starCount;i++){
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = (Math.random()*2 + 1).toFixed(1);
-  s.style.width = size + 'px';
-  s.style.height = size + 'px';
-  s.style.left = (Math.random()*100) + '%';
-  s.style.top = (Math.random()*70) + '%';
-  s.style.animationDelay = (Math.random()*2.6).toFixed(2) + 's';
-  starsField.appendChild(s);
-}
-
-function revealLine(containerId, text, wordDelayMs){
-  const container = document.getElementById(containerId);
-  const words = text.split(' ');
-  words.forEach((w, i)=>{
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = w + (i < words.length-1 ? '\u00A0' : '');
-    span.style.animationDelay = (i * wordDelayMs / 1000) + 's';
-    container.appendChild(span);
+  certBtn.addEventListener('click', function(){
+    certWrap.classList.add('show');
+    certBtn.style.display = 'none';
+    setTimeout(()=>{
+      certWrap.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 150);
   });
-  return words.length * wordDelayMs;
-}
-
-const introContinue = document.getElementById('introContinue');
-const introScreen = document.getElementById('introScreen');
-
-setTimeout(()=>{
-  revealLine('introLine1', 'ONDE TUDO COMEÇOU', 140);
-}, 2150);
-
-setTimeout(()=>{
-  revealLine('introLine2', '28 / 05 / 2026', 160);
-}, 3350);
-
-setTimeout(()=>{
-  /* ── CORRIGIDO: coração branco 🤍 no texto de elogio ── */
-  revealLine('introLine3', 'Você é linda e maravilhosa, Sthefany 🤍', 90);
-}, 4450);
-
-setTimeout(()=>{
-  /* buenos dias — referência à dinâmica em espanhol de vocês */
-  revealLine('introLine4', '¡Buenos días! Espero que estés bien... ksksk — lembra dos nossos tempos falando em espanhol? 😏', 75);
-}, 5500);
-
-setTimeout(()=>{
-  introContinue.classList.add('show');
-}, 7800);
-
-introContinue.addEventListener('click', ()=>{
-  introScreen.classList.add('fade-out');
-  setTimeout(()=>{
-    /* ── CORRIGIDO: remove completamente do layout após fade ── */
-    introScreen.classList.add('gone');
-    overlayIntro.classList.add('active');
-  }, 700);
-});
 </script>
+
 </body>
 </html>
